@@ -20,7 +20,10 @@ import {
   SecurityBlueprint,
   MaintainerOutreach,
   VulnerabilitySummary,
+  ExposedSecret,
+  SecretScanSummary,
 } from '../../src/types/index.ts';
+import { SecretScannerEngine } from './secretScannerService.ts';
 
 interface TargetParsed {
   owner: string;
@@ -383,6 +386,7 @@ export class SentinelService {
       rawPackageJson,
       dependencies,
       vulnerabilities,
+      exposedSecrets: SecretScannerEngine.getSuperPromptDemoLeaks(),
     });
   }
 
@@ -635,6 +639,32 @@ export class SentinelService {
     // Query OSV API for each dependency
     const vulnerabilities = await this.queryOSVBatch(dependencies);
 
+    // Scan raw package.json and common repository files for exposed secrets
+    const filesToScan: { path: string; content: string }[] = [];
+    if (rawPackageJson) {
+      filesToScan.push({ path: 'package.json', content: rawPackageJson });
+    }
+
+    // Try fetching sample entry points (index.js, cli.js, etc.) from GitHub to scan for secrets
+    for (const commonFile of ['index.js', 'src/index.js', 'bin/cli.js', '.env.example', 'config.js']) {
+      for (const branch of ['main', 'master', 'HEAD']) {
+        try {
+          const fileRes = await fetch(
+            `https://raw.githubusercontent.com/${target.owner}/${target.repo}/${branch}/${commonFile}`
+          );
+          if (fileRes.ok) {
+            const content = await fileRes.text();
+            filesToScan.push({ path: commonFile, content });
+            break;
+          }
+        } catch {
+          // ignore
+        }
+      }
+    }
+
+    const { secrets: exposedSecrets, summary: secretSummary } = SecretScannerEngine.scanFiles(filesToScan);
+
     // Calculate Blast Radius
     const dependents = Math.max(12, Math.round(downloads / 80));
     const users = Math.max(1000, Math.round(downloads * 2.8));
@@ -655,6 +685,8 @@ export class SentinelService {
       rawPackageJson,
       dependencies,
       vulnerabilities,
+      exposedSecrets,
+      secretSummary,
     });
   }
 
@@ -772,6 +804,8 @@ export class SentinelService {
     rawPackageJson: string;
     dependencies: DependencyItem[];
     vulnerabilities: OSVVulnerability[];
+    exposedSecrets?: ExposedSecret[];
+    secretSummary?: SecretScanSummary;
   }): ProjectAnalysis {
     const {
       id,
@@ -789,6 +823,14 @@ export class SentinelService {
       rawPackageJson,
       dependencies,
       vulnerabilities,
+      exposedSecrets = [],
+      secretSummary = {
+        criticalCount: exposedSecrets.filter((s) => s.severity === 'Critical').length,
+        highCount: exposedSecrets.filter((s) => s.severity === 'High').length,
+        mediumCount: exposedSecrets.filter((s) => s.severity === 'Medium').length,
+        totalSecrets: exposedSecrets.length,
+        affectedFiles: new Set(exposedSecrets.map((s) => s.filePath)).size,
+      },
     } = params;
 
     // 1. Milestone thresholds & Velocity
@@ -884,6 +926,8 @@ export class SentinelService {
       dependencies,
       vulnerabilities,
       summary,
+      exposedSecrets,
+      secretSummary,
       rawPackageJson,
       updatedPackageJson,
       gitDiff,

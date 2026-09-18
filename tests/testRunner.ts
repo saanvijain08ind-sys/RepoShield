@@ -13,6 +13,7 @@
  */
 
 import { SentinelService } from '../server/services/sentinelService.ts';
+import { SecretScannerEngine } from '../server/services/secretScannerService.ts';
 import { DependencyItem, OSVVulnerability } from '../src/types/index.ts';
 
 export interface TestCaseResult {
@@ -219,6 +220,52 @@ export async function runSuite(): Promise<TestSuiteSummary> {
     }
     if (!githubIssueMarkdown.includes('1-Click Security Audit Summary')) {
       throw new Error('Issue markdown should include audit summary');
+    }
+  });
+
+  // =========================================================================
+  // 8. Exposed Secret & API Key Scanner Engine
+  // =========================================================================
+  await runTest('Secret Scanner', 'Detects exposed Google Cloud and Gemini API key', () => {
+    const snippet = `const apiKey = 'AIzaSyD-9xK11049583492817492837492019aB';`;
+    const findings = SecretScannerEngine.scanText(snippet, 'src/ai.ts');
+    if (findings.length === 0) {
+      throw new Error('Failed to detect exposed Gemini API key');
+    }
+    const geminiSecret = findings.find((f) => f.ruleId === 'SEC-GOOGLE-GEMINI');
+    if (!geminiSecret) throw new Error('SEC-GOOGLE-GEMINI rule not triggered');
+    if (geminiSecret.severity !== 'Critical') throw new Error('Expected Critical severity');
+    if (geminiSecret.envVarName !== 'GEMINI_API_KEY') throw new Error('Expected GEMINI_API_KEY envVarName');
+    if (!geminiSecret.maskedSecret.includes('••••')) throw new Error('Secret must be masked');
+  });
+
+  await runTest('Secret Scanner', 'Detects exposed OpenAI secret key with refactor guidance', () => {
+    const snippet = `export const OPENAI_KEY = "sk-proj-1234567890abcdef1234567890abcdef1234567890abcdef12";`;
+    const findings = SecretScannerEngine.scanText(snippet, 'config.js');
+    if (findings.length === 0) throw new Error('Failed to detect OpenAI secret key');
+    const secret = findings.find((f) => f.ruleId === 'SEC-OPENAI-KEY');
+    if (!secret) throw new Error('SEC-OPENAI-KEY not found');
+    if (!secret.revocationUrl) throw new Error('Expected provider revocation URL for OpenAI');
+  });
+
+  await runTest('Secret Scanner', 'Detects AWS access keys and database URIs in multi-file scan', () => {
+    const files = [
+      { path: 'deploy/aws.env', content: 'AWS_KEY=AKIAIOSFODNN7EXAMPLE' },
+      { path: 'server.js', content: 'const uri = "postgres://root:dbpassword123@db.prod.internal:5432/app";' },
+    ];
+    const { secrets, summary } = SecretScannerEngine.scanFiles(files);
+    if (secrets.length < 2) throw new Error(`Expected at least 2 secrets, found ${secrets.length}`);
+    if (summary.affectedFiles !== 2) throw new Error('Expected 2 affected files');
+  });
+
+  await runTest('Secret Scanner', 'SuperPrompt CLI demo preset includes detected secret leaks', () => {
+    const preset = SentinelService.getDemoPreset('superprompt-cli');
+    if (!preset) throw new Error('Preset not found');
+    if (!preset.exposedSecrets || preset.exposedSecrets.length === 0) {
+      throw new Error('Expected exposedSecrets array in SuperPrompt CLI preset');
+    }
+    if (!preset.secretSummary || preset.secretSummary.totalSecrets === 0) {
+      throw new Error('Expected secretSummary in SuperPrompt CLI preset');
     }
   });
 

@@ -133,6 +133,8 @@ export interface MaintainerOutreach {
   prBody: string;
 }
 
+export * from './secret.ts';
+
 export interface ProjectAnalysis {
   id: string;
   name: string;
@@ -144,6 +146,8 @@ export interface ProjectAnalysis {
   dependencies: DependencyItem[];
   vulnerabilities: OSVVulnerability[];
   summary: VulnerabilitySummary;
+  exposedSecrets?: import('./secret.ts').ExposedSecret[];
+  secretSummary?: import('./secret.ts').SecretScanSummary;
   rawPackageJson: string;
   updatedPackageJson: string;
   gitDiff: string;

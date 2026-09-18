@@ -48,7 +48,7 @@ export const TestSuiteModal: React.FC<Props> = ({ isOpen, onClose }) => {
             <div>
               <h3 className="text-sm font-semibold text-slate-100">RepoShield Automated Test Suite</h3>
               <p className="text-xs text-slate-400">
-                Verifying milestone thresholds, blast radius calculations, OSV CVE scans, and 1-click fix generation
+                Verifying milestone thresholds, blast radius calculations, OSV CVE scans, secret &amp; API key detection, and 1-click fixes
               </p>
             </div>
           </div>

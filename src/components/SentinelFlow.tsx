@@ -96,7 +96,13 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
       step: '02.',
       label: 'Audit Scanner',
       icon: ShieldAlert,
-      badge: analysis ? `${analysis.vulnerabilities.length} CVEs` : undefined,
+      badge: analysis
+        ? `${analysis.vulnerabilities.length} CVEs${
+            analysis.exposedSecrets && analysis.exposedSecrets.length > 0
+              ? ` • ${analysis.exposedSecrets.length} Secrets`
+              : ''
+          }`
+        : undefined,
     },
     {
       id: 'remediation',

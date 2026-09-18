@@ -12,6 +12,7 @@ import { LiveHttpWebsiteScanner, MockWebsiteScanner, ScannerAdapter } from './se
 import { VulnerabilityProcessor } from './services/vulnerabilityProcessor.ts';
 import { ReliabilityBenchmarkService } from './services/reliabilityBenchmark.ts';
 import { SentinelService } from './services/sentinelService.ts';
+import { SecretScannerEngine } from './services/secretScannerService.ts';
 import {
   RAW_SYNTHETIC_REPORT,
   SYNTHETIC_EVIDENCE_POOL,
@@ -104,6 +105,108 @@ apiRouter.post('/sentinel/query-osv', async (req, res) => {
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
   }
+});
+
+// 4. Dedicated Secret & API Key Scanner API (Scan arbitrary snippet or custom file)
+apiRouter.post('/sentinel/scan-secrets', (req, res) => {
+  try {
+    const { content, filePath = 'snippet' } = req.body;
+    if (!content || typeof content !== 'string') {
+      return res.status(400).json({ success: false, error: 'Text content is required for secret scan.' });
+    }
+
+    const secrets = SecretScannerEngine.scanText(content, filePath);
+    const summary = {
+      criticalCount: secrets.filter((s) => s.severity === 'Critical').length,
+      highCount: secrets.filter((s) => s.severity === 'High').length,
+      mediumCount: secrets.filter((s) => s.severity === 'Medium').length,
+      totalSecrets: secrets.length,
+      affectedFiles: secrets.length > 0 ? 1 : 0,
+    };
+
+    res.json({ success: true, secrets, summary });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5. Secret Scanner Detection Rules Catalog
+apiRouter.get('/sentinel/secret-rules', (req, res) => {
+  const rules = [
+    {
+      id: 'SEC-GOOGLE-GEMINI',
+      name: 'Google Cloud / Gemini API Key',
+      category: 'Google & Gemini API Key',
+      severity: 'Critical',
+      pattern: 'AIza[0-9A-Za-z\\-_]{35}',
+      provider: 'Google Cloud / Google AI Studio',
+    },
+    {
+      id: 'SEC-OPENAI-KEY',
+      name: 'OpenAI Secret API Key',
+      category: 'OpenAI API Key',
+      severity: 'Critical',
+      pattern: 'sk-... / sk-proj-...',
+      provider: 'OpenAI Platform',
+    },
+    {
+      id: 'SEC-ANTHROPIC-KEY',
+      name: 'Anthropic Claude API Key',
+      category: 'Anthropic Claude API Key',
+      severity: 'Critical',
+      pattern: 'sk-ant-api...',
+      provider: 'Anthropic Console',
+    },
+    {
+      id: 'SEC-AWS-ACCESS-KEY',
+      name: 'AWS Access Key ID',
+      category: 'AWS Access Key & Secret',
+      severity: 'Critical',
+      pattern: 'AKIA... / ASIA...',
+      provider: 'Amazon Web Services',
+    },
+    {
+      id: 'SEC-GITHUB-PAT',
+      name: 'GitHub Personal Access Token',
+      category: 'GitHub Personal Access Token',
+      severity: 'Critical',
+      pattern: 'ghp_... / github_pat_...',
+      provider: 'GitHub Developer Settings',
+    },
+    {
+      id: 'SEC-STRIPE-SECRET',
+      name: 'Stripe Secret Key',
+      category: 'Stripe Secret Key',
+      severity: 'Critical',
+      pattern: 'sk_live_... / sk_test_...',
+      provider: 'Stripe Dashboard',
+    },
+    {
+      id: 'SEC-DATABASE-URI',
+      name: 'Database URI with Credentials',
+      category: 'Database Connection String',
+      severity: 'High',
+      pattern: 'postgres:// / mongodb:// / mysql://',
+      provider: 'Database Provider',
+    },
+    {
+      id: 'SEC-PRIVATE-KEY',
+      name: 'Cryptographic Private Key Block',
+      category: 'Private Cryptographic Key',
+      severity: 'Critical',
+      pattern: '-----BEGIN PRIVATE KEY-----',
+      provider: 'Cryptographic Secrets / PKI',
+    },
+    {
+      id: 'SEC-SLACK-TOKEN',
+      name: 'Slack Webhook / Bot Token',
+      category: 'Slack Webhook / Bot Token',
+      severity: 'Medium',
+      pattern: 'xoxb-... / hooks.slack.com',
+      provider: 'Slack API Console',
+    },
+  ];
+  res.json({ success: true, rules });
 });
 
 

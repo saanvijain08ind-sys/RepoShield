@@ -11,6 +11,9 @@ import {
   ShieldCheck,
   Terminal,
   ArrowRight,
+  Key,
+  Lock,
+  ShieldAlert,
 } from 'lucide-react';
 import { ProjectAnalysis } from '../types/index.ts';
 
@@ -200,6 +203,63 @@ export const RemediationDiffView: React.FC<RemediationDiffViewProps> = ({
           )}
         </div>
       </div>
+
+      {/* 3. Exposed Secrets & Hardening Guidance (when secrets are detected) */}
+      {analysis.exposedSecrets && analysis.exposedSecrets.length > 0 && (
+        <div className="bg-white dark:bg-[#161b22] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] p-6 shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
+            <div className="flex items-center gap-2">
+              <Key className="w-5 h-5 text-[#cf222e]" />
+              <h4 className="font-syne text-base sm:text-lg font-bold text-[#1a1a1c] dark:text-[#f0f6fc]">
+                Secret Hardening &amp; Credential Rotation Checklist ({analysis.exposedSecrets.length})
+              </h4>
+            </div>
+            <span className="px-2.5 py-0.5 text-xs font-mono-code font-bold uppercase bg-[#cf222e] text-white">
+              Required Before Merge
+            </span>
+          </div>
+
+          <p className="text-xs font-sans text-[#24292f] dark:text-[#d0d7de]">
+            Hardcoded credentials cannot be safeguarded by updating dependency versions alone. Follow this automated hardening checklist to remove credentials from git history:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {analysis.exposedSecrets.map((secret) => (
+              <div
+                key={secret.id}
+                className="p-3.5 bg-[#f8f7f4] dark:bg-[#0f1117] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] space-y-2 text-xs font-mono-code"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[#cf222e] dark:text-[#ff7b72]">
+                    {secret.category}
+                  </span>
+                  <span className="text-[10px] bg-[#0d1117] text-slate-300 px-2 py-0.5 border border-slate-700">
+                    {secret.filePath}
+                  </span>
+                </div>
+
+                <div className="text-slate-600 dark:text-slate-400">
+                  Value: <span className="font-bold text-amber-500">{secret.maskedSecret}</span>
+                </div>
+
+                <div className="p-2 bg-[#0d1117] text-emerald-400 border border-slate-700 overflow-x-auto">
+                  <code>{secret.recommendedRefactor}</code>
+                </div>
+
+                <div className="text-[11px] text-[#57606a] dark:text-[#8b949e]">
+                  1. Revoke on <span className="font-semibold">{secret.providerName}</span>.<br />
+                  2. Store as <code className="font-bold text-[#0969da] dark:text-[#58a6ff]">{secret.envVarName}</code> in secret store.
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="p-3 bg-[#0d1117] border border-[#30363d] text-xs font-mono-code text-slate-200 flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>Git History Scrub: <code className="text-amber-300">git filter-repo --replace-text expressions.txt</code> or use <code className="text-amber-300">BFG Repo-Cleaner</code></span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
