@@ -645,8 +645,37 @@ export class SentinelService {
       filesToScan.push({ path: 'package.json', content: rawPackageJson });
     }
 
-    // Try fetching sample entry points (index.js, cli.js, etc.) from GitHub to scan for secrets
-    for (const commonFile of ['index.js', 'src/index.js', 'bin/cli.js', '.env.example', 'config.js']) {
+    // High-priority files to check on remote GitHub repos
+    const candidateFiles = [
+      '.env',
+      '.env.local',
+      '.env.example',
+      '.env.development',
+      '.env.production',
+      'index.js',
+      'index.ts',
+      'src/index.js',
+      'src/index.ts',
+      'src/app.js',
+      'src/app.ts',
+      'src/server.js',
+      'src/server.ts',
+      'src/config.js',
+      'src/config.ts',
+      'config.js',
+      'config.json',
+      'bin/cli.js',
+      'cli.js',
+      'docker-compose.yml',
+      'wrangler.toml',
+      'config/keys.js',
+      'config/default.json',
+    ];
+
+    const fetchedPaths = new Set<string>();
+
+    for (const commonFile of candidateFiles) {
+      if (fetchedPaths.has(commonFile)) continue;
       for (const branch of ['main', 'master', 'HEAD']) {
         try {
           const fileRes = await fetch(
@@ -654,7 +683,11 @@ export class SentinelService {
           );
           if (fileRes.ok) {
             const content = await fileRes.text();
-            filesToScan.push({ path: commonFile, content });
+            // Don't scan excessively large files
+            if (content.length < 500000) {
+              filesToScan.push({ path: commonFile, content });
+              fetchedPaths.add(commonFile);
+            }
             break;
           }
         } catch {
