@@ -1,19 +1,17 @@
 import React from 'react';
-import { Shield, PlusCircle, RefreshCw, Terminal, Sun, Moon, Github } from 'lucide-react';
+import { Shield, PlusCircle, Terminal, Sun, Moon, Github } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.tsx';
 
 interface HeaderProps {
   onOpenRegister: () => void;
   onOpenTestSuite: () => void;
-  onRefresh: () => void;
+  onRefresh?: () => void;
   isRefreshing?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenRegister,
   onOpenTestSuite,
-  onRefresh,
-  isRefreshing,
 }) => {
   const { theme, toggleTheme } = useTheme();
 
@@ -63,18 +61,6 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="hidden md:inline text-[11px]">Dark</span>
                 </>
               )}
-            </button>
-
-            {/* Refresh Button */}
-            <button
-              id="refresh-data-btn"
-              onClick={onRefresh}
-              disabled={isRefreshing}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-[#24292f] dark:text-[#c9d1d9] bg-[#f6f8fa] dark:bg-[#21262d] hover:bg-[#f3f4f6] dark:hover:bg-[#30363d] border border-[#d0d7de] dark:border-[#30363d] rounded-md transition-colors disabled:opacity-50"
-              title="Refresh project metrics & scans"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-[#0969da] dark:text-[#58a6ff]' : ''}`} />
-              <span className="hidden sm:inline">Sync</span>
             </button>
 
             {/* Test Suite Verification */}
