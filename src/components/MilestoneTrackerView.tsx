@@ -39,7 +39,7 @@ export const MilestoneTrackerView: React.FC<MilestoneTrackerViewProps> = ({
       {/* 1. Threshold Status Banner (Variation 2 Hero Banner) */}
       <div
         id="milestone-status-banner"
-        className="p-6 sm:p-8 border-2 border-[#1a1a1c] dark:border-[#f0f6fc] bg-white dark:bg-[#952424] text-[#1a1a1c] dark:text-white shadow-xs"
+        className="p-6 sm:p-8 border-2 border-[#1a1a1c] dark:border-[#f0f6fc] bg-white dark:bg-[#952424] text-[#952424] dark:text-white shadow-xs"
       >
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
@@ -49,8 +49,8 @@ export const MilestoneTrackerView: React.FC<MilestoneTrackerViewProps> = ({
             <h2 className="font-syne text-xl sm:text-2xl font-extrabold uppercase tracking-tight mt-1.5 text-[#952424] dark:text-white">
               {isExceeded ? 'Transition Threshold Exceeded' : 'Hobby Milestone Tracking'}
             </h2>
-            <p className="font-mono-code text-xs sm:text-sm mt-1 text-[#1a1a1c] dark:text-white/90 font-semibold">
-              {owner}/{repo} {npmPackageName && <span className="opacity-80 dark:opacity-80 text-[#1a1a1c]/70 dark:text-white/70">(npm: {npmPackageName})</span>}
+            <p className="font-mono-code text-xs sm:text-sm mt-1 text-[#952424] dark:text-white/90 font-semibold">
+              {owner}/{repo} {npmPackageName && <span className="opacity-80 dark:opacity-80 text-[#952424]/80 dark:text-white/70">(npm: {npmPackageName})</span>}
             </p>
           </div>
 
@@ -65,7 +65,7 @@ export const MilestoneTrackerView: React.FC<MilestoneTrackerViewProps> = ({
           </button>
         </div>
 
-        <p className="text-xs sm:text-sm mt-4 sm:mt-5 leading-relaxed text-[#1a1a1c]/80 dark:text-white/85 max-w-3xl">
+        <p className="text-xs sm:text-sm mt-4 sm:mt-5 leading-relaxed text-[#952424]/90 dark:text-white/85 max-w-3xl">
           Greater than 10,000 downloads and 1,000 GitHub stars. Security assessment advised before downstream impact scales. Zero-friction audits prevent downstream emergencies.
         </p>
       </div>

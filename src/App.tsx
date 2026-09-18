@@ -16,9 +16,11 @@ import {
 import { Header } from './components/Header.tsx';
 import { SentinelFlow } from './components/SentinelFlow.tsx';
 import { TestSuiteModal } from './components/TestSuiteModal.tsx';
+import { ProjectRegistrationModal } from './components/ProjectRegistrationModal.tsx';
 
 export default function App() {
   const [isTestOpen, setIsTestOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [currentRepo, setCurrentRepo] = useState('superprompt-cli');
 
   return (
@@ -26,7 +28,7 @@ export default function App() {
       {/* GitHub-Themed Header */}
       <Header
         currentRepo={currentRepo}
-        onOpenRegister={() => {}}
+        onOpenRegister={() => setIsRegisterOpen(true)}
         onOpenTestSuite={() => setIsTestOpen(true)}
       />
 
@@ -41,6 +43,15 @@ export default function App() {
 
       {/* Automated In-App Test Suite Modal */}
       <TestSuiteModal isOpen={isTestOpen} onClose={() => setIsTestOpen(false)} />
+
+      {/* Register Target Modal */}
+      <ProjectRegistrationModal
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+        onRegistered={(newProj) => {
+          setCurrentRepo(newProj.name);
+        }}
+      />
 
       {/* Clean Variation 2 Footer */}
       <footer className="border-t-2 border-[#1a1a1c] dark:border-[#f0f6fc] bg-[var(--bg)] py-6 text-xs font-mono-code text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 transition-colors">

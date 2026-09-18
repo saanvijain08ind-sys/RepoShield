@@ -1,16 +1,15 @@
 import React from 'react';
-import { PlusCircle, Terminal, Sun, Moon } from 'lucide-react';
+import { PlusCircle, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.tsx';
 
 interface HeaderProps {
   onOpenRegister: () => void;
-  onOpenTestSuite: () => void;
+  onOpenTestSuite?: () => void;
   currentRepo?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenRegister,
-  onOpenTestSuite,
   currentRepo = 'superprompt-cli',
 }) => {
   const { theme, toggleTheme } = useTheme();
@@ -58,16 +57,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="hidden sm:inline">DARK MODE</span>
               </>
             )}
-          </button>
-
-          {/* Test Suite Pill */}
-          <button
-            id="open-test-suite-btn"
-            onClick={onOpenTestSuite}
-            className="px-3 py-1.5 rounded-full border border-[#1a1a1c] dark:border-[#f0f6fc] bg-white dark:bg-[#161b22] text-[#1a1a1c] dark:text-[#f0f6fc] hover:bg-[#f0f6fc] dark:hover:bg-[#21262d] font-mono-code text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1.5 shadow-2xs"
-          >
-            <Terminal className="w-3 h-3 text-[#2ea043]" />
-            <span>TEST SUITE [14/14]</span>
           </button>
 
           {/* Register Target Primary Button */}
