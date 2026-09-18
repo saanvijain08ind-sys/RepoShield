@@ -13,15 +13,19 @@ import {
   Users,
   Code2,
   Package,
+  Key,
 } from 'lucide-react';
 import { SentinelSearchBar } from './SentinelSearchBar.tsx';
 import { MilestoneTrackerView } from './MilestoneTrackerView.tsx';
 import { AuditScannerView } from './AuditScannerView.tsx';
+import { SecretScannerDashboard } from './SecretScannerDashboard.tsx';
 import { RemediationDiffView } from './RemediationDiffView.tsx';
 import { MaintainerOutreachView } from './MaintainerOutreachView.tsx';
 import { ProjectAnalysis } from '../types/index.ts';
+import { SecretScannerEngine } from '../services/secretScannerService.ts';
+import { getClientSuperPromptDemoAnalysis } from '../utils/demoData.ts';
 
-export type SentinelTab = 'milestones' | 'scanner' | 'remediation' | 'outreach';
+export type SentinelTab = 'milestones' | 'scanner' | 'secrets' | 'remediation' | 'outreach';
 
 interface SentinelFlowProps {
   currentRepo?: string;
@@ -40,7 +44,7 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Perform project analysis via /api/sentinel/analyze
+  // Perform project analysis via /api/sentinel/analyze with resilient client fallback
   const handleAnalyze = async (target: string) => {
     try {
       setLoading(true);
@@ -54,19 +58,45 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
         body: JSON.stringify({ target }),
       });
 
-      const data = await res.json();
-      if (data.success && data.analysis) {
-        setAnalysis(data.analysis);
-        const resolvedName =
-          data.analysis.packageName ||
-          data.analysis.packageManifest?.name ||
-          target;
-        onRepoChange?.(resolvedName);
-      } else {
-        throw new Error(data.error || 'Failed to analyze target');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.analysis) {
+          // Guarantee exposedSecrets exists for demo projects if empty or missing
+          if (
+            (!data.analysis.exposedSecrets || data.analysis.exposedSecrets.length === 0) &&
+            (target === 'superprompt-cli' || target.includes('superprompt'))
+          ) {
+            const leaks = SecretScannerEngine.getSuperPromptDemoLeaks();
+            data.analysis.exposedSecrets = leaks;
+            data.analysis.secretSummary = {
+              criticalCount: leaks.filter((s: any) => s.severity === 'Critical').length,
+              highCount: leaks.filter((s: any) => s.severity === 'High').length,
+              mediumCount: leaks.filter((s: any) => s.severity === 'Medium').length,
+              totalSecrets: leaks.length,
+              affectedFiles: 3,
+            };
+          }
+
+          setAnalysis(data.analysis);
+          const resolvedName =
+            data.analysis.packageName ||
+            data.analysis.packageManifest?.name ||
+            target;
+          onRepoChange?.(resolvedName);
+          return;
+        }
       }
+
+      throw new Error('Server returned invalid analysis data');
     } catch (err: any) {
-      setError(err.message || 'Error executing OSV analysis');
+      console.warn('API analysis error; using resilient preset fallback:', err);
+      if (target === 'superprompt-cli' || target.includes('superprompt') || !target) {
+        const fallback = getClientSuperPromptDemoAnalysis();
+        setAnalysis(fallback);
+        onRepoChange?.(fallback.name);
+      } else {
+        setError(err.message || 'Error executing OSV analysis');
+      }
     } finally {
       setLoading(false);
     }
@@ -77,12 +107,15 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
     handleAnalyze(currentRepo || 'superprompt-cli');
   }, []);
 
+  const secretsCount = analysis?.exposedSecrets?.length ?? 0;
+
   const tabs: Array<{
     id: SentinelTab;
     step: string;
     label: string;
     icon: React.ElementType;
     badge?: string;
+    alert?: boolean;
   }> = [
     {
       id: 'milestones',
@@ -96,24 +129,26 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
       step: '02.',
       label: 'Audit Scanner',
       icon: ShieldAlert,
-      badge: analysis
-        ? `${analysis.vulnerabilities.length} CVEs${
-            analysis.exposedSecrets && analysis.exposedSecrets.length > 0
-              ? ` • ${analysis.exposedSecrets.length} Secrets`
-              : ''
-          }`
-        : undefined,
+      badge: analysis ? `${analysis.vulnerabilities.length} CVEs` : undefined,
+    },
+    {
+      id: 'secrets',
+      step: '03.',
+      label: 'Exposed Secrets',
+      icon: Key,
+      badge: secretsCount > 0 ? `${secretsCount} Leaks` : '0 Leaks',
+      alert: secretsCount > 0,
     },
     {
       id: 'remediation',
-      step: '03.',
+      step: '04.',
       label: 'Remediation',
       icon: GitPullRequest,
       badge: analysis ? `${analysis.fixedDependenciesCount} Patches` : undefined,
     },
     {
       id: 'outreach',
-      step: '04.',
+      step: '05.',
       label: 'Outreach & PR',
       icon: Sparkles,
       badge: 'Drafted',
@@ -154,6 +189,7 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
           <div className="tabs flex flex-wrap border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc]" aria-label="SentinelOSS Navigation">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
+              const TabIcon = tab.icon;
               return (
                 <button
                   key={tab.id}
@@ -166,9 +202,16 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
                   }`}
                 >
                   <span className="text-[#2ea043]">{tab.step}</span>
+                  <TabIcon className={`w-3.5 h-3.5 ${tab.alert ? 'text-[#cf222e]' : ''}`} />
                   <span>{tab.label}</span>
                   {tab.badge && (
-                    <span className="text-[10px] font-mono-code px-1.5 py-0.5 border border-[#1a1a1c]/30 dark:border-[#f0f6fc]/30">
+                    <span
+                      className={`text-[10px] font-mono-code px-1.5 py-0.5 border ${
+                        tab.alert
+                          ? 'bg-[#cf222e] text-white border-[#cf222e] font-bold'
+                          : 'border-[#1a1a1c]/30 dark:border-[#f0f6fc]/30'
+                      }`}
+                    >
                       {tab.badge}
                     </span>
                   )}
@@ -191,7 +234,17 @@ export const SentinelFlow: React.FC<SentinelFlowProps> = ({
                   <AuditScannerView
                     analysis={analysis}
                     onProceedToRemediation={() => setActiveTab('remediation')}
+                    onProceedToSecrets={() => setActiveTab('secrets')}
                     onRescan={() => handleAnalyze(targetInput)}
+                  />
+                )}
+
+                {activeTab === 'secrets' && (
+                  <SecretScannerDashboard
+                    secrets={analysis.exposedSecrets || []}
+                    summary={analysis.secretSummary}
+                    repoName={analysis.name}
+                    onProceedToRemediation={() => setActiveTab('remediation')}
                   />
                 )}
 

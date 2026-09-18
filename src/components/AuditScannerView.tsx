@@ -22,6 +22,7 @@ import { SecretScannerDashboard } from './SecretScannerDashboard.tsx';
 interface AuditScannerViewProps {
   analysis: ProjectAnalysis;
   onProceedToRemediation: () => void;
+  onProceedToSecrets?: () => void;
   onRescan?: () => void;
   isRescanning?: boolean;
 }
@@ -29,6 +30,7 @@ interface AuditScannerViewProps {
 export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
   analysis,
   onProceedToRemediation,
+  onProceedToSecrets,
   onRescan,
   isRescanning,
 }) => {
@@ -108,7 +110,13 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
 
         <button
           id="tab-secret-scanner"
-          onClick={() => setActiveAuditTab('SECRETS')}
+          onClick={() => {
+            if (onProceedToSecrets) {
+              onProceedToSecrets();
+            } else {
+              setActiveAuditTab('SECRETS');
+            }
+          }}
           className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 py-2.5 text-xs font-mono-code font-bold uppercase transition-all ${
             activeAuditTab === 'SECRETS'
               ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117] shadow-xs'
@@ -118,7 +126,7 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
           <Key className="w-4 h-4 text-amber-500" />
           <span>Exposed Secrets &amp; API Keys ({secretsCount})</span>
           {secretsCount > 0 && (
-            <span className="px-1.5 py-0.2 bg-[#cf222e] text-white text-[10px] font-mono-code">
+            <span className="px-1.5 py-0.5 bg-[#cf222e] text-white text-[10px] font-mono-code font-bold">
               ACTION
             </span>
           )}
@@ -130,6 +138,7 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
           secrets={analysis.exposedSecrets || []}
           summary={analysis.secretSummary}
           repoName={analysis.name}
+          onProceedToRemediation={onProceedToRemediation}
         />
       ) : (
         <>
@@ -167,6 +176,18 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
           </div>
 
           <div className="flex items-center gap-2.5 shrink-0">
+            {secretsCount > 0 && (
+              <button
+                id="header-view-secrets-btn"
+                onClick={() => (onProceedToSecrets ? onProceedToSecrets() : setActiveAuditTab('SECRETS'))}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-mono-code font-bold uppercase text-[#cf222e] bg-[#fff8f8] dark:bg-[#2c1517] border-2 border-[#cf222e] hover:bg-[#ffeef0] dark:hover:bg-[#3c1d20] transition-colors shadow-2xs"
+                title="View exposed secrets and API tokens"
+              >
+                <Key className="w-3.5 h-3.5" />
+                <span>{secretsCount} Leaks</span>
+              </button>
+            )}
+
             {onRescan && (
               <button
                 onClick={onRescan}

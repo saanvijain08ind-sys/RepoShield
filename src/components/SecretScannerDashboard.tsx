@@ -16,19 +16,24 @@ import {
   Lock,
   Search,
   Filter,
+  GitPullRequest,
+  ArrowRight,
 } from 'lucide-react';
 import { ExposedSecret, SecretScanSummary, SecretSeverity } from '../types/index.ts';
+import { SecretScannerEngine } from '../services/secretScannerService.ts';
 
 interface SecretScannerDashboardProps {
   secrets: ExposedSecret[];
   summary?: SecretScanSummary;
   repoName: string;
+  onProceedToRemediation?: () => void;
 }
 
 export const SecretScannerDashboard: React.FC<SecretScannerDashboardProps> = ({
   secrets,
   summary,
   repoName,
+  onProceedToRemediation,
 }) => {
   const [selectedSeverity, setSelectedSeverity] = useState<string>('ALL');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -102,12 +107,20 @@ export const SecretScannerDashboard: React.FC<SecretScannerDashboardProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: customSnippet, filePath: 'live-test.js' }),
       });
-      const data = await res.json();
-      if (data.success && data.secrets) {
-        setCustomScanResults(data.secrets);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.secrets) {
+          setCustomScanResults(data.secrets);
+          return;
+        }
       }
+      // Client-side fallback if server API is unreachable or returns non-200
+      const localFindings = SecretScannerEngine.scanText(customSnippet, 'live-test.js');
+      setCustomScanResults(localFindings);
     } catch (e) {
-      console.error('Custom secret scan error:', e);
+      console.warn('Network error scanning secrets on server; using in-browser engine:', e);
+      const localFindings = SecretScannerEngine.scanText(customSnippet, 'live-test.js');
+      setCustomScanResults(localFindings);
     } finally {
       setIsScanningCustom(false);
     }
@@ -149,10 +162,22 @@ export const SecretScannerDashboard: React.FC<SecretScannerDashboardProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-mono-code bg-[#f8f7f4] dark:bg-[#0f1117] px-3 py-2 border-2 border-[#1a1a1c] dark:border-[#f0f6fc] font-bold text-[#cf222e] dark:text-[#ff7b72]">
               {totalCount} Leaked {totalCount === 1 ? 'Credential' : 'Credentials'} Flagged
             </span>
+            {onProceedToRemediation && (
+              <button
+                id="secrets-proceed-to-remediation-btn"
+                onClick={onProceedToRemediation}
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono-code font-bold uppercase tracking-wider text-white bg-[#2ea043] hover:bg-[#2c9740] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] shadow-xs transition-opacity"
+              >
+                <GitPullRequest className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Proceed to Remediation</span>
+                <span className="sm:hidden">Remediation</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -486,6 +511,22 @@ export const SecretScannerDashboard: React.FC<SecretScannerDashboardProps> = ({
                 ))}
               </div>
             )}
+          </div>
+        )}
+        {onProceedToRemediation && (
+          <div className="mt-6 pt-5 border-t-2 border-[#1a1a1c] dark:border-[#f0f6fc] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-xs font-mono-code text-[#57606a] dark:text-[#8b949e]">
+              Ready to generate code fixes, revoke credentials, and patch vulnerable dependencies?
+            </div>
+            <button
+              id="bottom-proceed-remediation-btn"
+              onClick={onProceedToRemediation}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs font-mono-code font-bold uppercase tracking-wider text-white bg-[#2ea043] hover:bg-[#2c9740] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] shadow-xs transition-opacity"
+            >
+              <GitPullRequest className="w-3.5 h-3.5" />
+              <span>Proceed to 04. Remediation Diff</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
         )}
       </div>
