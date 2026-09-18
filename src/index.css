@@ -1,3 +1,43 @@
 @import "tailwindcss";
 
 @variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #f8f7f4;
+  --ink: #1a1a1c;
+  --accent: #2ea043;
+  --ink-faint: rgba(26, 26, 28, 0.1);
+  --ink-muted: rgba(26, 26, 28, 0.6);
+}
+
+.dark {
+  --bg: #0f1117;
+  --ink: #f0f6fc;
+  --accent: #2ea043;
+  --ink-faint: rgba(240, 246, 252, 0.12);
+  --ink-muted: rgba(240, 246, 252, 0.65);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'Space Mono', monospace;
+}
+
+.label-mono {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  color: var(--ink-muted);
+}

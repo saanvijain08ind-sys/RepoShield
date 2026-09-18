@@ -1,94 +1,89 @@
 import React from 'react';
-import { Shield, PlusCircle, Terminal, Sun, Moon, Github } from 'lucide-react';
+import { PlusCircle, Terminal, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.tsx';
 
 interface HeaderProps {
   onOpenRegister: () => void;
   onOpenTestSuite: () => void;
-  onRefresh?: () => void;
-  isRefreshing?: boolean;
+  currentRepo?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenRegister,
   onOpenTestSuite,
+  currentRepo = 'superprompt-cli',
 }) => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="border-b border-[#d0d7de] dark:border-[#30363d] bg-white dark:bg-[#161b22] sticky top-0 z-30 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-15">
-          {/* GitHub Style Brand & Breadcrumbs */}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-md bg-[#24292f] dark:bg-[#21262d] text-emerald-500 border border-[#d0d7de] dark:border-[#30363d] flex items-center justify-center shadow-xs">
-              <Shield className="w-5 h-5 text-emerald-500" />
-            </div>
+    <header className="border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc] bg-[#f8f7f4] dark:bg-[#0f1117] px-4 sm:px-8 py-4 sticky top-0 z-30 transition-colors">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        {/* Left: Brand & Breadcrumbs */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#1a1a1c] dark:bg-[#f0f6fc] text-white dark:text-[#0f1117] flex items-center justify-center font-syne font-extrabold text-lg select-none shadow-xs">
+            R
+          </div>
 
-            <div className="flex items-center gap-2">
-              <div className="flex items-center text-sm font-semibold tracking-tight text-[#1f2328] dark:text-[#f0f6fc]">
-                <span className="text-[#656d76] dark:text-[#8b949e] font-normal hover:underline cursor-pointer">
-                  sentinel-oss
-                </span>
-                <span className="mx-1 text-[#656d76] dark:text-[#8b949e]">/</span>
-                <span className="font-bold">early-warning-security</span>
-              </div>
-
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">
-                Early-Warning
+          <div className="flex items-center gap-2">
+            <div className="flex items-center text-xs sm:text-sm font-semibold tracking-tight text-[#1a1a1c] dark:text-[#f0f6fc]">
+              <span className="label-mono text-[#1a1a1c] dark:text-[#f0f6fc] tracking-wider opacity-90">
+                RepoShield
+              </span>
+              <span className="mx-1.5 opacity-30 font-mono-code">/</span>
+              <span className="font-semibold font-mono-code text-[#2ea043]">
+                {currentRepo}
               </span>
             </div>
           </div>
+        </div>
 
-          {/* GitHub Style Actions Bar */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            {/* Theme Toggle Button */}
-            <button
-              id="theme-toggle-btn"
-              onClick={toggleTheme}
-              className="p-1.5 rounded-md border border-[#d0d7de] dark:border-[#30363d] bg-[#f6f8fa] dark:bg-[#21262d] text-[#656d76] dark:text-[#8b949e] hover:text-[#24292f] dark:hover:text-[#f0f6fc] hover:bg-[#f3f4f6] dark:hover:bg-[#30363d] transition-colors flex items-center gap-1.5 text-xs font-medium"
-              title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <>
-                  <Sun className="w-3.5 h-3.5 text-amber-400" />
-                  <span className="hidden md:inline text-[11px]">Light</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="w-3.5 h-3.5 text-slate-600" />
-                  <span className="hidden md:inline text-[11px]">Dark</span>
-                </>
-              )}
-            </button>
+        {/* Right: Actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Theme Toggle Pill */}
+          <button
+            id="theme-toggle-btn"
+            onClick={toggleTheme}
+            className="px-3 py-1.5 rounded-full border border-[#1a1a1c] dark:border-[#f0f6fc] bg-white dark:bg-[#161b22] text-[#1a1a1c] dark:text-[#f0f6fc] hover:bg-[#f0f6fc] dark:hover:bg-[#21262d] font-mono-code text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1.5 shadow-2xs"
+            title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <>
+                <Sun className="w-3 h-3 text-amber-400" />
+                <span className="hidden sm:inline">LIGHT MODE</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-3 h-3 text-slate-700" />
+                <span className="hidden sm:inline">DARK MODE</span>
+              </>
+            )}
+          </button>
 
-            {/* Test Suite Verification */}
-            <button
-              id="open-test-suite-btn"
-              onClick={onOpenTestSuite}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-[#24292f] dark:text-[#c9d1d9] bg-[#f6f8fa] dark:bg-[#21262d] hover:bg-[#f3f4f6] dark:hover:bg-[#30363d] border border-[#d0d7de] dark:border-[#30363d] rounded-md transition-colors shadow-2xs"
-            >
-              <Terminal className="w-3.5 h-3.5 text-[#656d76] dark:text-[#8b949e]" />
-              <span className="hidden sm:inline">Test Suite</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] font-semibold bg-[#afb8c1]/20 dark:bg-[#30363d] text-[#0969da] dark:text-[#58a6ff]">
-                11/11
-              </span>
-            </button>
+          {/* Test Suite Pill */}
+          <button
+            id="open-test-suite-btn"
+            onClick={onOpenTestSuite}
+            className="px-3 py-1.5 rounded-full border border-[#1a1a1c] dark:border-[#f0f6fc] bg-white dark:bg-[#161b22] text-[#1a1a1c] dark:text-[#f0f6fc] hover:bg-[#f0f6fc] dark:hover:bg-[#21262d] font-mono-code text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1.5 shadow-2xs"
+          >
+            <Terminal className="w-3 h-3 text-[#2ea043]" />
+            <span>TEST SUITE [14/14]</span>
+          </button>
 
-            {/* Register Project Button - GitHub Green Primary */}
-            <button
-              id="register-project-btn"
-              onClick={onOpenRegister}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#1f883d] hover:bg-[#1a7f37] dark:bg-[#238636] dark:hover:bg-[#2ea043] border border-[#1b1f24]/15 rounded-md transition-colors shadow-xs"
-            >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span>Register Target</span>
-            </button>
-          </div>
+          {/* Register Target Primary Button */}
+          <button
+            id="register-project-btn"
+            onClick={onOpenRegister}
+            className="px-3 sm:px-4 py-2 text-xs font-mono-code font-bold uppercase tracking-wider text-white dark:text-[#0f1117] bg-[#1a1a1c] dark:bg-[#f0f6fc] hover:opacity-90 transition-opacity flex items-center gap-1.5 border border-[#1a1a1c] dark:border-[#f0f6fc] shadow-xs"
+          >
+            <PlusCircle className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">REGISTER TARGET</span>
+            <span className="sm:hidden">REGISTER</span>
+          </button>
         </div>
       </div>
     </header>
   );
 };
+
 

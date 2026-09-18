@@ -48,23 +48,23 @@ export const RemediationDiffView: React.FC<RemediationDiffViewProps> = ({
   const diffLines = (gitDiff || '').split('\n');
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* 1. Remediation Header */}
-      <div className="bg-white dark:bg-[#161b22] border border-[#d0d7de] dark:border-[#30363d] rounded-lg p-5 shadow-xs">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#d0d7de] dark:border-[#30363d]">
+      <div className="bg-white dark:bg-[#161b22] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] p-6 shadow-xs">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#1a7f37] dark:text-[#3fb950] bg-[#dafbe1] dark:bg-[#113818]/30 px-2 py-0.5 rounded-full border border-[#4ac26b]/30">
+              <span className="label-mono text-[#2ea043]">
                 1-Click Automated Patch
               </span>
-              <span className="text-xs text-[#656d76] dark:text-[#8b949e]">
-                Minimal-invasive semver bumps
+              <span className="text-xs font-mono-code text-[#1a1a1c]/60 dark:text-[#f0f6fc]/60">
+                • Minimal-invasive bumps
               </span>
             </div>
-            <h3 className="text-base font-bold text-[#1f2328] dark:text-[#f0f6fc] mt-1">
+            <h3 className="font-syne text-xl font-extrabold uppercase tracking-tight text-[#1a1a1c] dark:text-[#f0f6fc] mt-1">
               Vulnerability Remediation & Manifest Patch
             </h3>
-            <p className="text-xs text-[#656d76] dark:text-[#8b949e] mt-0.5">
+            <p className="text-xs font-mono-code text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 mt-1">
               Automated safe-patching replaces vulnerable dependency declarations with verified fixed release targets.
             </p>
           </div>
@@ -72,16 +72,16 @@ export const RemediationDiffView: React.FC<RemediationDiffViewProps> = ({
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handleCopy}
-              className="px-3 py-1.5 text-xs font-medium text-[#24292f] dark:text-[#c9d1d9] bg-[#f6f8fa] dark:bg-[#21262d] hover:bg-[#f3f4f6] dark:hover:bg-[#30363d] border border-[#d0d7de] dark:border-[#30363d] rounded-md transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-2 text-xs font-mono-code font-bold uppercase text-[#1a1a1c] dark:text-[#f0f6fc] bg-white dark:bg-[#161b22] hover:bg-[#f0f6fc] dark:hover:bg-[#21262d] border border-[#1a1a1c] dark:border-[#f0f6fc] transition-colors flex items-center gap-1.5 shadow-2xs"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Copied to Clipboard' : 'Copy Content'}</span>
+              {copied ? <Check className="w-3.5 h-3.5 text-[#2ea043]" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
 
             <button
               id="goto-outreach-btn"
               onClick={onProceedToOutreach}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-[#1f883d] hover:bg-[#1a7f37] dark:bg-[#238636] dark:hover:bg-[#2ea043] rounded-md shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono-code font-bold uppercase tracking-wider text-white bg-[#2ea043] hover:bg-[#2c9740] border border-[#1a1a1c] dark:border-[#f0f6fc] shadow-xs transition-opacity"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Draft Maintainer Outreach</span>
@@ -92,39 +92,39 @@ export const RemediationDiffView: React.FC<RemediationDiffViewProps> = ({
 
         {/* Patch Statistics */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
-          <div className="p-3 bg-[#f6f8fa] dark:bg-[#0d1117] rounded-md border border-[#d0d7de] dark:border-[#30363d]">
-            <div className="text-[11px] text-[#656d76] dark:text-[#8b949e]">Packages Patched</div>
-            <div className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400">
-              {fixedDependenciesCount} Manifest Targets
+          <div className="p-4 bg-[#f8f7f4] dark:bg-[#0f1117] border-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
+            <div className="label-mono">Packages Patched</div>
+            <div className="font-syne text-2xl font-extrabold text-[#2ea043] mt-1">
+              {fixedDependenciesCount} Targets
             </div>
           </div>
 
-          <div className="p-3 bg-[#f6f8fa] dark:bg-[#0d1117] rounded-md border border-[#d0d7de] dark:border-[#30363d]">
-            <div className="text-[11px] text-[#656d76] dark:text-[#8b949e]">Semver Compatibility</div>
-            <div className="text-xl font-bold font-mono text-[#0969da] dark:text-[#58a6ff]">
-              Zero Breaking Changes
+          <div className="p-4 bg-[#f8f7f4] dark:bg-[#0f1117] border-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
+            <div className="label-mono">Semver Compatibility</div>
+            <div className="font-syne text-2xl font-extrabold text-[#1a1a1c] dark:text-[#f0f6fc] mt-1">
+              Zero Breaking
             </div>
           </div>
 
-          <div className="p-3 bg-[#f6f8fa] dark:bg-[#0d1117] rounded-md border border-[#d0d7de] dark:border-[#30363d]">
-            <div className="text-[11px] text-[#656d76] dark:text-[#8b949e]">OSV CVE Mitigation</div>
-            <div className="text-xl font-bold font-mono text-[#1f2328] dark:text-[#f0f6fc]">
-              {vulnerabilities.length} CVEs Mitigated
+          <div className="p-4 bg-[#f8f7f4] dark:bg-[#0f1117] border-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
+            <div className="label-mono">OSV CVE Mitigation</div>
+            <div className="font-syne text-2xl font-extrabold text-[#1a1a1c] dark:text-[#f0f6fc] mt-1">
+              {vulnerabilities.length} Mitigated
             </div>
           </div>
         </div>
       </div>
 
       {/* 2. Code Viewer & Tabs */}
-      <div className="bg-white dark:bg-[#161b22] border border-[#d0d7de] dark:border-[#30363d] rounded-lg overflow-hidden shadow-xs">
-        <div className="flex items-center justify-between px-4 py-2.5 bg-[#f6f8fa] dark:bg-[#0d1117] border-b border-[#d0d7de] dark:border-[#30363d]">
+      <div className="bg-white dark:bg-[#161b22] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] overflow-hidden shadow-xs">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-[#f8f7f4] dark:bg-[#0f1117] border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab('diff')}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                 activeTab === 'diff'
-                  ? 'bg-white dark:bg-[#161b22] text-[#0969da] dark:text-[#58a6ff] border border-[#d0d7de] dark:border-[#30363d] shadow-2xs'
-                  : 'text-[#656d76] dark:text-[#8b949e] hover:text-[#1f2328]'
+                  ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                  : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
               }`}
             >
               <GitPullRequest className="w-3.5 h-3.5" />
@@ -133,10 +133,10 @@ export const RemediationDiffView: React.FC<RemediationDiffViewProps> = ({
 
             <button
               onClick={() => setActiveTab('patched')}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                 activeTab === 'patched'
-                  ? 'bg-white dark:bg-[#161b22] text-[#0969da] dark:text-[#58a6ff] border border-[#d0d7de] dark:border-[#30363d] shadow-2xs'
-                  : 'text-[#656d76] dark:text-[#8b949e] hover:text-[#1f2328]'
+                  ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                  : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
               }`}
             >
               <FileCode className="w-3.5 h-3.5" />
@@ -145,10 +145,10 @@ export const RemediationDiffView: React.FC<RemediationDiffViewProps> = ({
 
             <button
               onClick={() => setActiveTab('original')}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                 activeTab === 'original'
-                  ? 'bg-white dark:bg-[#161b22] text-[#0969da] dark:text-[#58a6ff] border border-[#d0d7de] dark:border-[#30363d] shadow-2xs'
-                  : 'text-[#656d76] dark:text-[#8b949e] hover:text-[#1f2328]'
+                  ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                  : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
               }`}
             >
               <Code2 className="w-3.5 h-3.5" />
@@ -156,13 +156,13 @@ export const RemediationDiffView: React.FC<RemediationDiffViewProps> = ({
             </button>
           </div>
 
-          <span className="text-[11px] font-mono text-[#656d76] dark:text-[#8b949e]">
+          <span className="text-[11px] font-mono-code text-[#1a1a1c]/60 dark:text-[#f0f6fc]/60">
             {activeTab === 'diff' ? 'package.json (diff)' : 'package.json'}
           </span>
         </div>
 
         {/* Diff Code Display */}
-        <div className="p-4 overflow-x-auto bg-[#0d1117] text-slate-100 font-mono text-xs max-h-[500px]">
+        <div className="p-4 overflow-x-auto bg-[#0d1117] text-slate-100 font-mono-code text-xs max-h-[500px]">
           {activeTab === 'diff' && (
             <pre className="space-y-0.5">
               {diffLines.map((line, idx) => {

@@ -74,23 +74,23 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* 1. Header & Severity Breakdown Bar */}
-      <div className="bg-white dark:bg-[#161b22] border border-[#d0d7de] dark:border-[#30363d] rounded-lg p-5 shadow-xs">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#d0d7de] dark:border-[#30363d]">
+      <div className="bg-white dark:bg-[#161b22] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] p-6 shadow-xs">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0969da] dark:text-[#58a6ff] bg-[#0969da]/10 dark:bg-[#1f6feb]/20 px-2 py-0.5 rounded-full border border-[#0969da]/20 dark:border-[#1f6feb]/30">
+              <span className="label-mono text-[#2ea043]">
                 Google OSV Database Engine
               </span>
-              <span className="text-xs text-[#656d76] dark:text-[#8b949e]">
-                Zero-setup client & server audit
+              <span className="text-xs font-mono-code text-[#1a1a1c]/60 dark:text-[#f0f6fc]/60">
+                • Zero-setup audit
               </span>
             </div>
-            <h3 className="text-base font-bold text-[#1f2328] dark:text-[#f0f6fc] mt-1">
+            <h3 className="font-syne text-xl font-extrabold uppercase tracking-tight text-[#1a1a1c] dark:text-[#f0f6fc] mt-1">
               Open-Source Vulnerability (OSV) Audit Findings
             </h3>
-            <p className="text-xs text-[#656d76] dark:text-[#8b949e] mt-0.5">
+            <p className="text-xs font-mono-code text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 mt-1">
               Audited {summary.scannedDependenciesCount} direct & transitive dependencies against public CVE advisories.
             </p>
           </div>
@@ -100,7 +100,7 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
               <button
                 onClick={onRescan}
                 disabled={isRescanning}
-                className="px-3 py-1.5 text-xs font-medium text-[#24292f] dark:text-[#c9d1d9] bg-[#f6f8fa] dark:bg-[#21262d] hover:bg-[#f3f4f6] dark:hover:bg-[#30363d] border border-[#d0d7de] dark:border-[#30363d] rounded-md transition-colors flex items-center gap-1.5"
+                className="px-3.5 py-2 text-xs font-mono-code font-bold uppercase text-[#1a1a1c] dark:text-[#f0f6fc] bg-white dark:bg-[#161b22] hover:bg-[#f0f6fc] dark:hover:bg-[#21262d] border border-[#1a1a1c] dark:border-[#f0f6fc] transition-colors flex items-center gap-1.5 shadow-2xs"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isRescanning ? 'animate-spin' : ''}`} />
                 <span>Rescan</span>
@@ -110,7 +110,7 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
             <button
               id="goto-remediation-btn"
               onClick={onProceedToRemediation}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-[#1f883d] hover:bg-[#1a7f37] dark:bg-[#238636] dark:hover:bg-[#2ea043] rounded-md shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono-code font-bold uppercase tracking-wider text-white bg-[#2ea043] hover:bg-[#2c9740] border border-[#1a1a1c] dark:border-[#f0f6fc] shadow-xs transition-opacity"
             >
               <GitPullRequest className="w-3.5 h-3.5" />
               <span>Generate 1-Click Fix PR</span>
@@ -123,78 +123,78 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4">
           <div
             onClick={() => setSelectedSeverity('ALL')}
-            className={`p-3 rounded-md border cursor-pointer transition-all ${
+            className={`p-3.5 border-2 cursor-pointer transition-all ${
               selectedSeverity === 'ALL'
-                ? 'bg-[#f6f8fa] dark:bg-[#21262d] border-[#0969da] dark:border-[#58a6ff] ring-1 ring-[#0969da]'
-                : 'bg-white dark:bg-[#161b22] border-[#d0d7de] dark:border-[#30363d] hover:border-[#8c959f]'
+                ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117] border-[#1a1a1c] dark:border-[#f0f6fc]'
+                : 'bg-[#f8f7f4] dark:bg-[#0f1117] text-[#1a1a1c] dark:text-[#f0f6fc] border-[#1a1a1c] dark:border-[#f0f6fc]'
             }`}
           >
-            <div className="text-[11px] text-[#656d76] dark:text-[#8b949e]">Total Findings</div>
-            <div className="text-xl font-bold font-mono text-[#1f2328] dark:text-[#f0f6fc]">
+            <div className="label-mono opacity-80">Total Findings</div>
+            <div className="font-syne text-2xl font-extrabold mt-1">
               {summary.totalFindings}
             </div>
           </div>
 
           <div
             onClick={() => setSelectedSeverity('CRITICAL')}
-            className={`p-3 rounded-md border cursor-pointer transition-all ${
+            className={`p-3.5 border-2 cursor-pointer transition-all ${
               selectedSeverity === 'CRITICAL'
-                ? 'bg-red-500/10 border-red-500 ring-1 ring-red-500'
-                : 'bg-white dark:bg-[#161b22] border-[#d0d7de] dark:border-[#30363d] hover:border-red-400'
+                ? 'bg-[#cf222e] text-white border-[#cf222e]'
+                : 'bg-[#fff8f8] dark:bg-[#cf222e]/10 text-[#cf222e] border-[#cf222e]'
             }`}
           >
-            <div className="text-[11px] font-semibold text-red-600 dark:text-red-400 flex items-center gap-1">
+            <div className="label-mono text-current flex items-center gap-1">
               <AlertOctagon className="w-3 h-3" /> Critical
             </div>
-            <div className="text-xl font-bold font-mono text-red-600 dark:text-red-400">
+            <div className="font-syne text-2xl font-extrabold mt-1">
               {summary.criticalCount}
             </div>
           </div>
 
           <div
             onClick={() => setSelectedSeverity('HIGH')}
-            className={`p-3 rounded-md border cursor-pointer transition-all ${
+            className={`p-3.5 border-2 cursor-pointer transition-all ${
               selectedSeverity === 'HIGH'
-                ? 'bg-orange-500/10 border-orange-500 ring-1 ring-orange-500'
-                : 'bg-white dark:bg-[#161b22] border-[#d0d7de] dark:border-[#30363d] hover:border-orange-400'
+                ? 'bg-orange-600 text-white border-orange-600'
+                : 'bg-orange-50 dark:bg-orange-500/10 text-orange-600 border-orange-500'
             }`}
           >
-            <div className="text-[11px] font-semibold text-orange-600 dark:text-orange-400 flex items-center gap-1">
+            <div className="label-mono text-current flex items-center gap-1">
               <AlertTriangle className="w-3 h-3" /> High
             </div>
-            <div className="text-xl font-bold font-mono text-orange-600 dark:text-orange-400">
+            <div className="font-syne text-2xl font-extrabold mt-1">
               {summary.highCount}
             </div>
           </div>
 
           <div
             onClick={() => setSelectedSeverity('MEDIUM')}
-            className={`p-3 rounded-md border cursor-pointer transition-all ${
+            className={`p-3.5 border-2 cursor-pointer transition-all ${
               selectedSeverity === 'MEDIUM'
-                ? 'bg-amber-500/10 border-amber-500 ring-1 ring-amber-500'
-                : 'bg-white dark:bg-[#161b22] border-[#d0d7de] dark:border-[#30363d] hover:border-amber-400'
+                ? 'bg-amber-600 text-white border-amber-600'
+                : 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500'
             }`}
           >
-            <div className="text-[11px] font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+            <div className="label-mono text-current flex items-center gap-1">
               <AlertTriangle className="w-3 h-3" /> Medium
             </div>
-            <div className="text-xl font-bold font-mono text-amber-600 dark:text-amber-400">
+            <div className="font-syne text-2xl font-extrabold mt-1">
               {summary.mediumCount}
             </div>
           </div>
 
           <div
             onClick={() => setSelectedSeverity('LOW')}
-            className={`p-3 rounded-md border cursor-pointer transition-all ${
+            className={`p-3.5 border-2 cursor-pointer transition-all ${
               selectedSeverity === 'LOW'
-                ? 'bg-blue-500/10 border-blue-500 ring-1 ring-blue-500'
-                : 'bg-white dark:bg-[#161b22] border-[#d0d7de] dark:border-[#30363d] hover:border-blue-400'
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500'
             }`}
           >
-            <div className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+            <div className="label-mono text-current flex items-center gap-1">
               <Info className="w-3 h-3" /> Low
             </div>
-            <div className="text-xl font-bold font-mono text-blue-600 dark:text-blue-400">
+            <div className="font-syne text-2xl font-extrabold mt-1">
               {summary.lowCount}
             </div>
           </div>
@@ -239,54 +239,54 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
           {filteredVulns.map((vuln) => (
             <div
               key={`${vuln.id}_${vuln.packageName}`}
-              className="bg-white dark:bg-[#161b22] border border-[#d0d7de] dark:border-[#30363d] rounded-lg p-4 sm:p-5 shadow-xs hover:border-[#8c959f] dark:hover:border-[#8b949e] transition-all"
+              className="bg-white dark:bg-[#161b22] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] p-5 shadow-xs transition-all"
             >
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
-                <div className="space-y-1.5 flex-1">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                <div className="space-y-2 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     {getSeverityBadge(vuln.severity)}
 
-                    <span className="font-mono text-xs font-bold text-[#0969da] dark:text-[#58a6ff] bg-[#0969da]/10 dark:bg-[#1f6feb]/20 px-2 py-0.5 rounded-md">
+                    <span className="font-mono-code text-xs font-bold text-[#1a1a1c] dark:text-[#f0f6fc] bg-[#1a1a1c]/10 dark:bg-[#f0f6fc]/15 px-2 py-0.5 border border-[#1a1a1c]/20 dark:border-[#f0f6fc]/30">
                       {vuln.cveId}
                     </span>
 
-                    <span className="text-xs font-mono font-semibold text-[#1f2328] dark:text-[#f0f6fc] flex items-center gap-1">
-                      <Package className="w-3.5 h-3.5 text-[#656d76] dark:text-[#8b949e]" />
+                    <span className="text-xs font-mono-code font-semibold text-[#1a1a1c] dark:text-[#f0f6fc] flex items-center gap-1">
+                      <Package className="w-3.5 h-3.5 text-[#2ea043]" />
                       <span>{vuln.packageName}</span>
                     </span>
 
                     {vuln.cvssScore && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-[#afb8c1]/20 dark:bg-[#30363d] text-[#656d76] dark:text-[#8b949e]">
+                      <span className="text-[10px] font-mono-code px-1.5 py-0.5 border border-[#1a1a1c]/30 dark:border-[#f0f6fc]/30 text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70">
                         CVSS: {vuln.cvssScore}
                       </span>
                     )}
                   </div>
 
-                  <h4 className="text-sm font-semibold text-[#1f2328] dark:text-[#f0f6fc]">
+                  <h4 className="font-syne text-base font-bold text-[#1a1a1c] dark:text-[#f0f6fc]">
                     {vuln.summary}
                   </h4>
 
                   {vuln.details && (
-                    <p className="text-xs text-[#656d76] dark:text-[#8b949e] leading-relaxed line-clamp-2">
+                    <p className="text-xs text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 leading-relaxed line-clamp-2">
                       {vuln.details}
                     </p>
                   )}
                 </div>
 
                 {/* Current vs Recommended Fix Version Card */}
-                <div className="p-3 bg-[#f6f8fa] dark:bg-[#0d1117] rounded-md border border-[#d0d7de] dark:border-[#30363d] flex flex-col justify-between shrink-0 min-w-48 text-xs">
-                  <div className="flex items-center justify-between gap-3 text-[#656d76] dark:text-[#8b949e]">
+                <div className="p-3.5 bg-[#f8f7f4] dark:bg-[#0f1117] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] flex flex-col justify-between shrink-0 min-w-52 text-xs font-mono-code">
+                  <div className="flex items-center justify-between gap-3 text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70">
                     <span>Current Version:</span>
-                    <span className="font-mono font-bold text-red-600 dark:text-red-400">
+                    <span className="font-bold text-[#cf222e]">
                       {vuln.currentVersion}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between gap-3 mt-1.5 pt-1.5 border-t border-[#d0d7de]/60 dark:border-[#30363d]">
-                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold">
-                      Recommended Fix:
+                  <div className="flex items-center justify-between gap-3 mt-1.5 pt-1.5 border-t border-[#1a1a1c]/20 dark:border-[#f0f6fc]/20">
+                    <span className="text-[#2ea043] font-bold">
+                      Fix Target:
                     </span>
-                    <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className="font-bold text-[#2ea043]">
                       ^{vuln.fixedVersion}
                     </span>
                   </div>
@@ -296,7 +296,7 @@ export const AuditScannerView: React.FC<AuditScannerViewProps> = ({
                       href={vuln.references[0].url}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-2 text-[11px] text-[#0969da] dark:text-[#58a6ff] hover:underline flex items-center justify-end gap-1"
+                      className="mt-2 text-[11px] text-[#2ea043] hover:underline flex items-center justify-end gap-1 font-bold"
                     >
                       <span>Advisory Details</span>
                       <ExternalLink className="w-3 h-3" />

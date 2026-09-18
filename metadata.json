@@ -1,5 +1,5 @@
 {
-  "name": "SentinelOSS",
+  "name": "RepoShield",
   "description": "Early-warning security transition tool for open-source maintainers tracking engagement thresholds and providing 1-click vulnerability assessment and fix pull requests.",
   "requestFramePermissions": [],
   "majorCapabilities": [

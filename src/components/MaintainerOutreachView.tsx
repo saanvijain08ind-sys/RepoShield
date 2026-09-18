@@ -43,26 +43,26 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
       {/* 1. Low-Pressure, Celebratory Outreach Card */}
       <div
         id="maintainer-outreach-card"
-        className="bg-white dark:bg-[#161b22] border border-[#d0d7de] dark:border-[#30363d] rounded-lg p-5 shadow-xs"
+        className="bg-white dark:bg-[#161b22] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] p-6 shadow-xs"
       >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#d0d7de] dark:border-[#30363d]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/20 shrink-0">
+            <div className="p-2.5 bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/30 shrink-0">
               <Heart className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-full border border-purple-500/20">
+                <span className="label-mono text-purple-600 dark:text-purple-400">
                   Supportive & Educational
                 </span>
-                <span className="text-xs text-[#656d76] dark:text-[#8b949e]">
-                  Zero blame, 100% celebratory outreach
+                <span className="text-xs font-mono-code text-[#1a1a1c]/60 dark:text-[#f0f6fc]/60">
+                  • Zero blame, celebratory outreach
                 </span>
               </div>
-              <h3 className="text-base font-bold text-[#1f2328] dark:text-[#f0f6fc] mt-1">
+              <h3 className="font-syne text-xl font-extrabold uppercase tracking-tight text-[#1a1a1c] dark:text-[#f0f6fc] mt-1">
                 Maintainer Outreach & 1-Click Fix PR Generator
               </h3>
-              <p className="text-xs text-[#656d76] dark:text-[#8b949e] mt-0.5">
+              <p className="text-xs font-mono-code text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 mt-1">
                 Maintainers build hobby projects for fun. When an ecosystem goes viral, low-pressure outreach with turn-key fixes protects developers without triggering maintainer burnout.
               </p>
             </div>
@@ -74,7 +74,7 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
               href={githubNewIssueUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-[#0969da] hover:bg-[#0860ca] dark:bg-[#1f6feb] dark:hover:bg-[#388bfd] rounded-md shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono-code font-bold uppercase tracking-wider text-white bg-[#1a1a1c] hover:bg-black dark:bg-[#f0f6fc] dark:text-[#0f1117] dark:hover:bg-white border border-[#1a1a1c] dark:border-[#f0f6fc] shadow-xs transition-opacity"
             >
               <Github className="w-3.5 h-3.5" />
               <span>Open Issue on GitHub</span>
@@ -86,13 +86,13 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
         {/* Tab Selection: GitHub Issue vs Email vs PR Body */}
         <div className="pt-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-1 bg-[#f6f8fa] dark:bg-[#0d1117] p-1 rounded-md border border-[#d0d7de] dark:border-[#30363d]">
+            <div className="flex flex-wrap items-center gap-1 bg-[#f8f7f4] dark:bg-[#0f1117] p-1 border-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
               <button
                 onClick={() => setActiveOutreachTab('issue')}
-                className={`px-3 py-1 text-xs font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                   activeOutreachTab === 'issue'
-                    ? 'bg-white dark:bg-[#21262d] text-[#1f2328] dark:text-[#f0f6fc] shadow-2xs font-semibold'
-                    : 'text-[#656d76] dark:text-[#8b949e]'
+                    ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                    : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
                 }`}
               >
                 <Github className="w-3.5 h-3.5" />
@@ -101,10 +101,10 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
 
               <button
                 onClick={() => setActiveOutreachTab('email')}
-                className={`px-3 py-1 text-xs font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                   activeOutreachTab === 'email'
-                    ? 'bg-white dark:bg-[#21262d] text-[#1f2328] dark:text-[#f0f6fc] shadow-2xs font-semibold'
-                    : 'text-[#656d76] dark:text-[#8b949e]'
+                    ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                    : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
                 }`}
               >
                 <Mail className="w-3.5 h-3.5" />
@@ -113,10 +113,10 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
 
               <button
                 onClick={() => setActiveOutreachTab('pr')}
-                className={`px-3 py-1 text-xs font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                   activeOutreachTab === 'pr'
-                    ? 'bg-white dark:bg-[#21262d] text-[#1f2328] dark:text-[#f0f6fc] shadow-2xs font-semibold'
-                    : 'text-[#656d76] dark:text-[#8b949e]'
+                    ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                    : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
                 }`}
               >
                 <GitPullRequest className="w-3.5 h-3.5" />
@@ -134,11 +134,11 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
                     : `${outreachDraft.prTitle}\n\n${outreachDraft.prBody}`;
                 copyToClipboard(text, 'outreach');
               }}
-              className="px-2.5 py-1 text-xs font-medium text-[#24292f] dark:text-[#c9d1d9] bg-[#f6f8fa] dark:bg-[#21262d] hover:bg-[#f3f4f6] dark:hover:bg-[#30363d] border border-[#d0d7de] dark:border-[#30363d] rounded-md transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-1.5 text-xs font-mono-code font-bold uppercase text-[#1a1a1c] dark:text-[#f0f6fc] bg-white dark:bg-[#161b22] hover:bg-[#f0f6fc] dark:hover:bg-[#21262d] border border-[#1a1a1c] dark:border-[#f0f6fc] transition-colors flex items-center gap-1.5 shadow-2xs"
             >
               {copiedSection === 'outreach' ? (
                 <>
-                  <Check className="w-3 h-3 text-emerald-500" />
+                  <Check className="w-3 h-3 text-[#2ea043]" />
                   <span>Copied</span>
                 </>
               ) : (
@@ -151,10 +151,10 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
           </div>
 
           {/* Draft Preview Box */}
-          <div className="p-4 bg-[#f6f8fa] dark:bg-[#0d1117] border border-[#d0d7de] dark:border-[#30363d] rounded-md text-xs font-mono text-[#1f2328] dark:text-[#e6edf3] whitespace-pre-wrap leading-relaxed max-h-80 overflow-y-auto">
+          <div className="p-4 bg-[#f8f7f4] dark:bg-[#0d1117] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] text-xs font-mono-code text-[#1a1a1c] dark:text-[#e6edf3] whitespace-pre-wrap leading-relaxed max-h-80 overflow-y-auto">
             {activeOutreachTab === 'issue' && (
               <div>
-                <div className="font-bold text-[#0969da] dark:text-[#58a6ff] pb-2 mb-2 border-b border-[#d0d7de] dark:border-[#30363d]">
+                <div className="font-bold text-[#2ea043] pb-2 mb-2 border-b border-[#1a1a1c]/20 dark:border-[#f0f6fc]/20">
                   Title: {outreachDraft.githubIssueTitle}
                 </div>
                 {outreachDraft.githubIssueMarkdown}
@@ -163,7 +163,7 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
 
             {activeOutreachTab === 'email' && (
               <div>
-                <div className="font-bold text-[#0969da] dark:text-[#58a6ff] pb-2 mb-2 border-b border-[#d0d7de] dark:border-[#30363d]">
+                <div className="font-bold text-[#2ea043] pb-2 mb-2 border-b border-[#1a1a1c]/20 dark:border-[#f0f6fc]/20">
                   Subject: {outreachDraft.subject}
                 </div>
                 {outreachDraft.body}
@@ -172,7 +172,7 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
 
             {activeOutreachTab === 'pr' && (
               <div>
-                <div className="font-bold text-[#0969da] dark:text-[#58a6ff] pb-2 mb-2 border-b border-[#d0d7de] dark:border-[#30363d]">
+                <div className="font-bold text-[#2ea043] pb-2 mb-2 border-b border-[#1a1a1c]/20 dark:border-[#f0f6fc]/20">
                   PR Title: {outreachDraft.prTitle}
                 </div>
                 {outreachDraft.prBody}
@@ -185,26 +185,26 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
       {/* 2. One-Click Security Blueprint Card */}
       <div
         id="security-blueprint-card"
-        className="bg-white dark:bg-[#161b22] border border-[#d0d7de] dark:border-[#30363d] rounded-lg p-5 shadow-xs"
+        className="bg-white dark:bg-[#161b22] border-2 border-[#1a1a1c] dark:border-[#f0f6fc] p-6 shadow-xs"
       >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#d0d7de] dark:border-[#30363d]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shrink-0">
+            <div className="p-2.5 bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                <span className="label-mono text-[#2ea043]">
                   Zero-Friction Infrastructure
                 </span>
-                <span className="text-xs text-[#656d76] dark:text-[#8b949e]">
-                  Instant GitHub configuration files
+                <span className="text-xs font-mono-code text-[#1a1a1c]/60 dark:text-[#f0f6fc]/60">
+                  • Instant GitHub repo files
                 </span>
               </div>
-              <h3 className="text-base font-bold text-[#1f2328] dark:text-[#f0f6fc] mt-1">
+              <h3 className="font-syne text-xl font-extrabold uppercase tracking-tight text-[#1a1a1c] dark:text-[#f0f6fc] mt-1">
                 One-Click Security Blueprint
               </h3>
-              <p className="text-xs text-[#656d76] dark:text-[#8b949e] mt-0.5">
+              <p className="text-xs font-mono-code text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 mt-1">
                 Drop these pre-configured files directly into your repository root to establish a responsible security disclosure channel and automated vulnerability monitoring.
               </p>
             </div>
@@ -219,7 +219,7 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
                     : securityBlueprint.dependabotYml;
                 copyToClipboard(text, 'blueprint');
               }}
-              className="px-3 py-1.5 text-xs font-semibold text-white bg-[#1f883d] hover:bg-[#1a7f37] dark:bg-[#238636] dark:hover:bg-[#2ea043] rounded-md shadow-xs transition-colors flex items-center gap-1.5"
+              className="px-4 py-2 text-xs font-mono-code font-bold uppercase tracking-wider text-white bg-[#2ea043] hover:bg-[#2c9740] border border-[#1a1a1c] dark:border-[#f0f6fc] shadow-xs transition-opacity flex items-center gap-2"
             >
               {copiedSection === 'blueprint' ? (
                 <>
@@ -240,13 +240,13 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
 
         {/* Blueprint Tabs & Code */}
         <div className="pt-4">
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             <button
               onClick={() => setActiveBlueprintTab('securityMd')}
-              className={`px-3 py-1 text-xs font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                 activeBlueprintTab === 'securityMd'
-                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-semibold border border-emerald-500/30'
-                  : 'text-[#656d76] dark:text-[#8b949e] hover:text-[#1f2328]'
+                  ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                  : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -255,10 +255,10 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
 
             <button
               onClick={() => setActiveBlueprintTab('dependabot')}
-              className={`px-3 py-1 text-xs font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-mono-code font-bold uppercase transition-colors flex items-center gap-1.5 ${
                 activeBlueprintTab === 'dependabot'
-                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-semibold border border-emerald-500/30'
-                  : 'text-[#656d76] dark:text-[#8b949e] hover:text-[#1f2328]'
+                  ? 'bg-[#1a1a1c] text-white dark:bg-[#f0f6fc] dark:text-[#0f1117]'
+                  : 'text-[#1a1a1c]/70 dark:text-[#f0f6fc]/70 hover:text-[#1a1a1c]'
               }`}
             >
               <FileCode className="w-3.5 h-3.5" />
@@ -266,7 +266,7 @@ export const MaintainerOutreachView: React.FC<MaintainerOutreachViewProps> = ({ 
             </button>
           </div>
 
-          <div className="p-4 bg-[#0d1117] rounded-md font-mono text-xs text-slate-200 overflow-x-auto max-h-80 border border-[#30363d]">
+          <div className="p-4 bg-[#0d1117] font-mono-code text-xs text-slate-200 overflow-x-auto max-h-80 border-2 border-[#1a1a1c] dark:border-[#f0f6fc]">
             <pre className="whitespace-pre-wrap leading-relaxed">
               <code>
                 {activeBlueprintTab === 'securityMd'
