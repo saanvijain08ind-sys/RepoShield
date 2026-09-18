@@ -5,7 +5,7 @@
  * Enforces duplicate-event prevention via deterministic event signatures.
  */
 
-import {
+import type {
   EngagementMetrics,
   Project,
   ProjectThresholds,

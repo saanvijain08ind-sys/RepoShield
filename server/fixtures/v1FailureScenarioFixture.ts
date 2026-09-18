@@ -23,7 +23,7 @@
  *    V2 Result: VERIFIED (Success)
  */
 
-import { Claim, EvidenceItem } from '../../src/types/index.ts';
+import type { Claim, EvidenceItem } from '../../src/types/index.ts';
 
 export interface ReliabilityBenchmarkScenario {
   id: string;

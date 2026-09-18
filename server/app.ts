@@ -5,7 +5,6 @@
 
 import express from 'express';
 import { apiRouter } from './routes.ts';
-import { runSuite } from '../tests/testRunner.ts';
 
 export function createExpressApp(): express.Express {
   const app = express();
@@ -33,6 +32,7 @@ export function createExpressApp(): express.Express {
   // In-app test execution endpoint to run unit & pipeline tests dynamically
   const testHandler = async (req: express.Request, res: express.Response) => {
     try {
+      const { runSuite } = await import('../tests/testRunner.ts');
       const results = await runSuite();
       res.json({ success: true, results });
     } catch (err: any) {

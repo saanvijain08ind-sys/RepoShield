@@ -5,11 +5,9 @@
  * and ClaimVerificationEngineV2 (Corrected) to measure real before/after metrics.
  */
 
-import { Claim } from '../../src/types/index.ts';
-import {
-  RELIABILITY_SCENARIOS,
-  ReliabilityBenchmarkScenario,
-} from '../fixtures/v1FailureScenarioFixture.ts';
+import type { Claim } from '../../src/types/index.ts';
+import { RELIABILITY_SCENARIOS } from '../fixtures/v1FailureScenarioFixture.ts';
+import type { ReliabilityBenchmarkScenario } from '../fixtures/v1FailureScenarioFixture.ts';
 import { ClaimVerificationEngineV1 } from './verificationEngineV1.ts';
 import { ClaimVerificationEngineV2 } from './verificationEngineV2.ts';
 

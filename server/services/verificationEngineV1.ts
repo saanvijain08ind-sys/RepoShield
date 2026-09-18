@@ -10,7 +10,7 @@
  *    V1 blindly asserts CONTRADICTED if ANY contradicting link exists, ignoring collectedAt timestamps.
  */
 
-import {
+import type {
   Claim,
   ClaimEvidenceLink,
   ClaimState,

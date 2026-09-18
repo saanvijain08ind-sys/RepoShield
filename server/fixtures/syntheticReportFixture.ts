@@ -14,7 +14,7 @@
  * - relationship to claim
  */
 
-import { Claim, EvidenceItem, SyntheticReport } from '../../src/types/index.ts';
+import type { Claim, EvidenceItem, SyntheticReport } from '../../src/types/index.ts';
 
 export const SYNTHETIC_EVIDENCE_POOL: EvidenceItem[] = [
   {

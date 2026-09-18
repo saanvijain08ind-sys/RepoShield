@@ -4,7 +4,7 @@
  * Never scans repositories or npm dependencies.
  */
 
-import { VulnerabilityCategory, VulnerabilitySeverity } from '../../../src/types/index.ts';
+import type { VulnerabilityCategory, VulnerabilitySeverity } from '../../../src/types/index.ts';
 
 export interface RawScannerFinding {
   category: VulnerabilityCategory;

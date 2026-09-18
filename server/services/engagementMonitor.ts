@@ -7,7 +7,7 @@
  * Gracefully handles rate limits, unauthenticated limits, and unavailable data.
  */
 
-import { EngagementMetrics } from '../../src/types/index.ts';
+import type { EngagementMetrics } from '../../src/types/index.ts';
 
 export interface EngagementCheckOptions {
   mockMetrics?: Partial<EngagementMetrics>;

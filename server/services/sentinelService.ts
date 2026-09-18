@@ -10,7 +10,7 @@
  * 6. Low-Pressure, Celebratory Maintainer Outreach drafting
  */
 
-import {
+import type {
   BlastRadius,
   DependencyItem,
   MilestoneMetrics,

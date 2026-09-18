@@ -4,7 +4,7 @@
  * Pre-seeded with representative open-source transition milestones for demonstration.
  */
 
-import {
+import type {
   EvidenceItem,
   Project,
   ProjectThresholds,

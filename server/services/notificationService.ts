@@ -4,7 +4,7 @@
  * Encourages maintainers to assess their public website security as audience scales.
  */
 
-import {
+import type {
   Project,
   SecurityAssessmentNotification,
   TransitionEvent,

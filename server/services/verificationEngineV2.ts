@@ -18,7 +18,7 @@
  *    conflict trace, rather than blindly defaulting to CONTRADICTED.
  */
 
-import {
+import type {
   Claim,
   ClaimEvidenceLink,
   ClaimState,

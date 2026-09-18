@@ -8,7 +8,8 @@ import { UrlValidator } from './services/urlValidator.ts';
 import { EngagementMonitor } from './services/engagementMonitor.ts';
 import { TransitionDetector } from './services/transitionDetector.ts';
 import { NotificationService } from './services/notificationService.ts';
-import { LiveHttpWebsiteScanner, MockWebsiteScanner, ScannerAdapter } from './services/scanner/scannerAdapter.ts';
+import { LiveHttpWebsiteScanner, MockWebsiteScanner } from './services/scanner/scannerAdapter.ts';
+import type { ScannerAdapter } from './services/scanner/scannerAdapter.ts';
 import { VulnerabilityProcessor } from './services/vulnerabilityProcessor.ts';
 import { ReliabilityBenchmarkService } from './services/reliabilityBenchmark.ts';
 import { SentinelService } from './services/sentinelService.ts';
@@ -17,7 +18,7 @@ import {
   RAW_SYNTHETIC_REPORT,
   SYNTHETIC_EVIDENCE_POOL,
 } from './fixtures/syntheticReportFixture.ts';
-import { Project, WebsiteScanResult } from '../src/types/index.ts';
+import type { Project, WebsiteScanResult } from '../src/types/index.ts';
 
 export const apiRouter = Router();
 

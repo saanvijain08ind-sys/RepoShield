@@ -4,7 +4,7 @@
  * Explicitly distinguishes estimated effort from measured completion time.
  */
 
-import { RemediationGuidance, VulnerabilityCategory, VulnerabilitySeverity } from '../../src/types/index.ts';
+import type { RemediationGuidance, VulnerabilityCategory, VulnerabilitySeverity } from '../../src/types/index.ts';
 
 export class RemediationService {
   /**
