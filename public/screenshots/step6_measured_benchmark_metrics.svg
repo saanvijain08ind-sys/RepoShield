@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .text-main { fill: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .text-muted { fill: #8b949e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .text-white { fill: #f0f6fc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .card-bg { fill: #161b22; stroke: #30363d; stroke-width: 1; }
+      .metric-card { fill: #161b22; stroke: #30363d; stroke-width: 1; }
+      .badge-green { fill: rgba(46, 160, 67, 0.15); stroke: #2ea043; stroke-width: 1; }
+      .badge-blue { fill: rgba(56, 139, 253, 0.15); stroke: #388bfd; stroke-width: 1; }
+      .badge-red { fill: rgba(248, 81, 73, 0.15); stroke: #f85149; stroke-width: 1; }
+      .bar-v1 { fill: #da3633; }
+      .bar-v2 { fill: #238636; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="800" class="bg" />
+
+  <!-- App Header -->
+  <rect x="0" y="0" width="1280" height="60" fill="#161b22" stroke="#30363d" stroke-width="1" />
+  <circle cx="36" cy="30" r="14" fill="#1f6feb" />
+  <path d="M 30 30 L 34 34 L 42 26" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="60" y="35" class="text-white" font-size="16" font-weight="600">PRISM: Open Source Security Transition Monitor</text>
+
+  <!-- Stepper Navigation -->
+  <rect x="40" y="80" width="1200" height="65" rx="8" class="card-bg" />
+  <rect x="55" y="92" width="175" height="40" rx="6" fill="#238636" />
+  <text x="142" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">✓ 1. Ingestion</text>
+  <rect x="245" y="92" width="175" height="40" rx="6" fill="#238636" />
+  <text x="332" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">✓ 2. Tri-State Claims</text>
+  <rect x="435" y="92" width="175" height="40" rx="6" fill="#238636" />
+  <text x="522" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">✓ 3. V1 Failure</text>
+  <rect x="625" y="92" width="175" height="40" rx="6" fill="#238636" />
+  <text x="712" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">✓ 4. Engineering Fix</text>
+  <rect x="815" y="92" width="175" height="40" rx="6" fill="#238636" />
+  <text x="902" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">✓ 5. V2 Resolution</text>
+  <!-- Step 6 (Active) -->
+  <rect x="1005" y="92" width="220" height="40" rx="6" fill="#1f6feb" />
+  <text x="1115" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">⚡ 6. Measured Benchmark</text>
+
+  <!-- Step 6 Content Container -->
+  <rect x="40" y="165" width="1200" height="580" rx="8" class="card-bg" />
+  <text x="70" y="200" class="text-white" font-size="18" font-weight="600">Step 6: Empirical Reliability Benchmark Metrics (V1 Baseline vs V2 Corrected)</text>
+  <text x="70" y="222" class="text-muted" font-size="13">Measured across 4 controlled security transition scenarios under identical input conditions.</text>
+
+  <!-- Top Metric Cards -->
+  <!-- Accuracy Card -->
+  <g transform="translate(70, 245)">
+    <rect x="0" y="0" width="360" height="135" rx="6" class="metric-card" />
+    <text x="20" y="30" class="text-muted" font-size="12" font-weight="600">VERIFICATION ACCURACY</text>
+    <text x="20" y="70" class="text-white" font-size="34" font-weight="bold">100.0%</text>
+    <rect x="165" y="45" width="80" height="26" rx="13" class="badge-green" />
+    <text x="205" y="62" fill="#3fb950" font-size="12" font-weight="bold" text-anchor="middle">+50.0%</text>
+    <text x="20" y="100" class="text-muted" font-size="12">V1 Baseline: 50.0% (2/4 correct) → V2: 100.0% (4/4)</text>
+    <rect x="20" y="115" width="150" height="6" rx="3" fill="#da3633" />
+    <rect x="180" y="115" width="150" height="6" rx="3" fill="#238636" />
+  </g>
+
+  <!-- False Contradictions Card -->
+  <g transform="translate(460, 245)">
+    <rect x="0" y="0" width="360" height="135" rx="6" class="metric-card" />
+    <text x="20" y="30" class="text-muted" font-size="12" font-weight="600">FALSE CONTRADICTION RATE</text>
+    <text x="20" y="70" class="text-white" font-size="34" font-weight="bold">0.0%</text>
+    <rect x="135" y="45" width="80" height="26" rx="13" class="badge-green" />
+    <text x="175" y="62" fill="#3fb950" font-size="12" font-weight="bold" text-anchor="middle">-50.0%</text>
+    <text x="20" y="100" class="text-muted" font-size="12">V1 False Alarms: 2 scenarios (50.0%) → V2: 0 (0.0%)</text>
+    <rect x="20" y="115" width="150" height="6" rx="3" fill="#da3633" />
+    <rect x="180" y="115" width="0" height="6" rx="3" fill="#238636" />
+  </g>
+
+  <!-- Pipeline Determinism Card -->
+  <g transform="translate(850, 245)">
+    <rect x="0" y="0" width="360" height="135" rx="6" class="metric-card" />
+    <text x="20" y="30" class="text-muted" font-size="12" font-weight="600">EXECUTION OVERHEAD &amp; JITTER</text>
+    <text x="20" y="70" class="text-white" font-size="34" font-weight="bold">&lt; 15 ms</text>
+    <rect x="160" y="45" width="110" height="26" rx="13" class="badge-blue" />
+    <text x="215" y="62" fill="#58a6ff" font-size="11" font-weight="bold" text-anchor="middle">ZERO JITTER</text>
+    <text x="20" y="100" class="text-muted" font-size="12">5/5 repeat test runs yield 100% identical outputs</text>
+    <rect x="20" y="115" width="320" height="6" rx="3" fill="#1f6feb" />
+  </g>
+
+  <!-- Scenario Table -->
+  <g transform="translate(70, 405)">
+    <rect x="0" y="0" width="1140" height="255" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1" />
+    
+    <!-- Table Header -->
+    <rect x="0" y="0" width="1140" height="35" rx="6" fill="#161b22" />
+    <text x="20" y="22" class="text-muted" font-size="11" font-weight="bold">SCENARIO ID &amp; NAME</text>
+    <text x="440" y="22" class="text-muted" font-size="11" font-weight="bold">EXPECTED</text>
+    <text x="590" y="22" class="text-muted" font-size="11" font-weight="bold">V1 BASELINE</text>
+    <text x="760" y="22" class="text-muted" font-size="11" font-weight="bold">V2 CORRECTED</text>
+    <text x="960" y="22" class="text-muted" font-size="11" font-weight="bold">V2 REMEDIATION GAIN</text>
+
+    <!-- Row 1: Post-Remediation HSTS -->
+    <text x="20" y="65" class="text-white" font-size="12" font-weight="600">scen_01_remediation_hsts (Post-Remediation HSTS)</text>
+    <text x="440" y="65" fill="#3fb950" font-size="11" font-weight="bold">VERIFIED</text>
+    <text x="590" y="65" fill="#f85149" font-size="11" font-weight="bold">CONTRADICTED ❌</text>
+    <text x="760" y="65" fill="#3fb950" font-size="11" font-weight="bold">VERIFIED ✓</text>
+    <text x="960" y="65" fill="#3fb950" font-size="11">✓ Remediated (+100%)</text>
+    <line x1="10" y1="80" x2="1130" y2="80" stroke="#21262d" />
+
+    <!-- Row 2: Stale Git Probe vs Fixed 404 -->
+    <text x="20" y="110" class="text-white" font-size="12" font-weight="600">scen_02_stale_git_vs_fixed (Git Exposure Remediated to 404)</text>
+    <text x="440" y="110" fill="#3fb950" font-size="11" font-weight="bold">VERIFIED</text>
+    <text x="590" y="110" fill="#f85149" font-size="11" font-weight="bold">CONTRADICTED ❌</text>
+    <text x="760" y="110" fill="#3fb950" font-size="11" font-weight="bold">VERIFIED ✓</text>
+    <text x="960" y="110" fill="#3fb950" font-size="11">✓ Remediated (+100%)</text>
+    <line x1="10" y1="125" x2="1130" y2="125" stroke="#21262d" />
+
+    <!-- Row 3: Neutral Telemetry Fallback -->
+    <text x="20" y="155" class="text-white" font-size="12" font-weight="600">scen_03_neutral_telemetry (Inconclusive / Absent Observations)</text>
+    <text x="440" y="155" fill="#e3b341" font-size="11" font-weight="bold">INSUFFICIENT_EVIDENCE</text>
+    <text x="590" y="155" fill="#e3b341" font-size="11" font-weight="bold">INSUFFICIENT_EVIDENCE ✓</text>
+    <text x="760" y="155" fill="#e3b341" font-size="11" font-weight="bold">INSUFFICIENT_EVIDENCE ✓</text>
+    <text x="960" y="155" class="text-muted" font-size="11">Preserved baseline</text>
+    <line x1="10" y1="170" x2="1130" y2="170" stroke="#21262d" />
+
+    <!-- Row 4: Persistent Insecure Transport -->
+    <text x="20" y="200" class="text-white" font-size="12" font-weight="600">scen_04_persistent_insecure (Port 80 Plain HTTP Contradiction)</text>
+    <text x="440" y="200" fill="#f85149" font-size="11" font-weight="bold">CONTRADICTED</text>
+    <text x="590" y="200" fill="#f85149" font-size="11" font-weight="bold">CONTRADICTED ✓</text>
+    <text x="760" y="200" fill="#f85149" font-size="11" font-weight="bold">CONTRADICTED ✓</text>
+    <text x="960" y="200" class="text-muted" font-size="11">Preserved baseline</text>
+  </g>
+
+  <!-- Live Rerun Button & Summary -->
+  <rect x="70" y="680" width="220" height="42" rx="6" fill="#238636" />
+  <text x="180" y="706" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">⚡ Rerun Benchmark (Live)</text>
+  <text x="310" y="706" class="text-muted" font-size="12">Total Demo Duration: 140s (&lt; 180s ceiling). All tests 100% green.</text>
+</svg>

@@ -1,0 +1,8 @@
+{
+  "name": "SentinelOSS",
+  "description": "Early-warning security transition tool for open-source maintainers tracking engagement thresholds and providing 1-click vulnerability assessment and fix pull requests.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

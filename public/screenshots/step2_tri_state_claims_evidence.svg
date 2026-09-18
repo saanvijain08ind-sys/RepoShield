@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .text-main { fill: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .text-muted { fill: #8b949e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .text-white { fill: #f0f6fc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .card-bg { fill: #161b22; stroke: #30363d; stroke-width: 1; }
+      .code-bg { fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+      .badge-green { fill: rgba(46, 160, 67, 0.15); stroke: #2ea043; stroke-width: 1; }
+      .badge-red { fill: rgba(248, 81, 73, 0.15); stroke: #f85149; stroke-width: 1; }
+      .badge-yellow { fill: rgba(210, 153, 34, 0.15); stroke: #d29922; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="800" class="bg" />
+
+  <!-- App Header -->
+  <rect x="0" y="0" width="1280" height="60" fill="#161b22" stroke="#30363d" stroke-width="1" />
+  <circle cx="36" cy="30" r="14" fill="#1f6feb" />
+  <path d="M 30 30 L 34 34 L 42 26" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="60" y="35" class="text-white" font-size="16" font-weight="600">PRISM: Open Source Security Transition Monitor</text>
+
+  <!-- Stepper Navigation -->
+  <rect x="40" y="80" width="1200" height="65" rx="8" class="card-bg" />
+  <!-- Step 1 (Completed) -->
+  <rect x="55" y="92" width="175" height="40" rx="6" fill="#238636" />
+  <text x="142" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">✓ 1. Ingestion</text>
+
+  <!-- Step 2 (Active) -->
+  <rect x="245" y="92" width="175" height="40" rx="6" fill="#1f6feb" />
+  <text x="332" y="117" fill="#ffffff" font-size="12" font-weight="600" text-anchor="middle">2. Tri-State Claims</text>
+
+  <!-- Steps 3-6 (Inactive) -->
+  <rect x="435" y="92" width="175" height="40" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1" />
+  <text x="522" y="117" class="text-muted" font-size="12" text-anchor="middle">3. V1 Failure</text>
+  <rect x="625" y="92" width="175" height="40" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1" />
+  <text x="712" y="117" class="text-muted" font-size="12" text-anchor="middle">4. Engineering Fix</text>
+  <rect x="815" y="92" width="175" height="40" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1" />
+  <text x="902" y="117" class="text-muted" font-size="12" text-anchor="middle">5. V2 Resolution</text>
+  <rect x="1005" y="92" width="220" height="40" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1" />
+  <text x="1115" y="117" class="text-muted" font-size="12" text-anchor="middle">6. Measured Benchmark</text>
+
+  <!-- Step 2 Content Container -->
+  <rect x="40" y="165" width="1200" height="580" rx="8" class="card-bg" />
+  <text x="70" y="200" class="text-white" font-size="18" font-weight="600">Step 2: Tri-State Verification &amp; Cryptographic Evidence Provenance Linkage</text>
+  <text x="70" y="222" class="text-muted" font-size="13">Every claim is deterministically verified against empirical telemetry, strictly producing three states with linked audit provenance.</text>
+
+  <!-- Left Column: Claims List (Width: 560) -->
+  <g transform="translate(70, 240)">
+    <!-- Claim 1: VERIFIED -->
+    <rect x="0" y="0" width="540" height="90" rx="6" fill="#161b22" stroke="#2ea043" stroke-width="2" />
+    <rect x="15" y="12" width="90" height="22" rx="11" class="badge-green" />
+    <text x="60" y="27" fill="#3fb950" font-size="10" font-weight="bold" text-anchor="middle">VERIFIED</text>
+    <text x="120" y="27" class="text-muted" font-size="11">Growth Milestone Verification</text>
+    <text x="15" y="52" class="text-white" font-size="13" font-weight="500">Repository "alexdev/superprompt-cli" &gt;= 1,000 GitHub stars.</text>
+    <text x="15" y="74" fill="#3fb950" font-size="11">✓ Empirical evidence supports rule (Observed: 1,240 stars)</text>
+
+    <!-- Claim 2: CONTRADICTED (Selected) -->
+    <rect x="0" y="102" width="540" height="90" rx="6" fill="#1c2128" stroke="#f85149" stroke-width="2" />
+    <rect x="15" y="114" width="115" height="22" rx="11" class="badge-red" />
+    <text x="72" y="129" fill="#f85149" font-size="10" font-weight="bold" text-anchor="middle">CONTRADICTED</text>
+    <text x="145" y="129" class="text-muted" font-size="11">Information Disclosure</text>
+    <text x="15" y="154" class="text-white" font-size="13" font-weight="500">Web server does not expose internal Git version control (.git/HEAD).</text>
+    <text x="15" y="176" fill="#f85149" font-size="11">✗ Contradicted by raw HTTP probe (Status 200 returned ref: refs/heads/main)</text>
+
+    <!-- Claim 3: INSUFFICIENT_EVIDENCE -->
+    <rect x="0" y="204" width="540" height="90" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <rect x="15" y="216" width="165" height="22" rx="11" class="badge-yellow" />
+    <text x="97" y="231" fill="#e3b341" font-size="10" font-weight="bold" text-anchor="middle">INSUFFICIENT_EVIDENCE</text>
+    <text x="195" y="231" class="text-muted" font-size="11">Public Key Infrastructure</text>
+    <text x="15" y="256" class="text-white" font-size="13" font-weight="500">DNS CAA records strictly restrict certificate issuance to Let's Encrypt.</text>
+    <text x="15" y="278" fill="#d29922" font-size="11">⚠ No candidate evidence found. Candidate evidence pool lacks DNS observations.</text>
+
+    <!-- Claim 4: CONTRADICTED -->
+    <rect x="0" y="306" width="540" height="90" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <rect x="15" y="318" width="115" height="22" rx="11" class="badge-red" />
+    <text x="72" y="333" fill="#f85149" font-size="10" font-weight="bold" text-anchor="middle">CONTRADICTED</text>
+    <text x="145" y="333" class="text-muted" font-size="11">Transport Security</text>
+    <text x="15" y="358" class="text-white" font-size="13" font-weight="500">Unencrypted HTTP port 80 strictly redirects to HTTPS.</text>
+    <text x="15" y="380" fill="#f85149" font-size="11">✗ Contradicted by port 80 probe (HTTP 200 served without Location redirect)</text>
+  </g>
+
+  <!-- Right Column: Evidence Provenance Inspector (Width: 560) -->
+  <g transform="translate(640, 240)">
+    <rect x="0" y="0" width="570" height="420" rx="6" class="card-bg" />
+    <rect x="15" y="15" width="540" height="35" rx="4" fill="#0d1117" />
+    <text x="25" y="37" class="text-white" font-size="13" font-weight="600">🔍 Linked Evidence Inspector: claim_no_git_exposure</text>
+
+    <text x="25" y="75" class="text-muted" font-size="12">Evidence Relationship:</text>
+    <rect x="160" y="60" width="110" height="22" rx="11" class="badge-red" />
+    <text x="215" y="75" fill="#f85149" font-size="11" font-weight="bold" text-anchor="middle">CONTRADICTS</text>
+
+    <text x="25" y="105" class="text-muted" font-size="12">Evidence Source:</text>
+    <text x="160" y="105" class="text-white" font-size="12" font-family="monospace">HTTP Sensitive Endpoint Probe: /.git/HEAD</text>
+
+    <text x="25" y="130" class="text-muted" font-size="12">Reference URL:</text>
+    <text x="160" y="130" fill="#58a6ff" font-size="12" font-family="monospace">https://superprompt-cli.dev/.git/HEAD</text>
+
+    <text x="25" y="155" class="text-muted" font-size="12">Collector Agent:</text>
+    <text x="160" y="155" class="text-white" font-size="12">Exposed Sensitive Endpoint Scanner v1.1</text>
+
+    <text x="25" y="180" class="text-muted" font-size="12">Provenance Hash:</text>
+    <text x="160" y="180" fill="#79c0ff" font-size="11" font-family="monospace">http-status:200-git-head-exposed (SHA-256 Verified)</text>
+
+    <!-- Raw Evidence Excerpt Box -->
+    <text x="25" y="215" class="text-white" font-size="12" font-weight="600">Raw Empirical Probe Excerpt:</text>
+    <rect x="25" y="225" width="520" height="110" rx="4" class="code-bg" />
+    <text x="40" y="250" fill="#7ee787" font-size="11" font-family="monospace">HTTP/1.1 200 OK</text>
+    <text x="40" y="270" fill="#c9d1d9" font-size="11" font-family="monospace">Content-Type: text/plain</text>
+    <text x="40" y="290" fill="#c9d1d9" font-size="11" font-family="monospace">Server: nginx/1.24.0</text>
+    <text x="40" y="315" fill="#f85149" font-size="11" font-family="monospace" font-weight="bold">ref: refs/heads/main</text>
+
+    <!-- Integrity Footer -->
+    <rect x="25" y="350" width="520" height="45" rx="4" fill="rgba(56, 139, 253, 0.1)" stroke="#1f6feb" stroke-width="1" />
+    <text x="40" y="377" fill="#58a6ff" font-size="12">🔒 Cryptographic audit trail: Verdict is directly anchored to probe telemetry.</text>
+  </g>
+
+  <!-- Bottom CTA -->
+  <rect x="980" y="680" width="230" height="42" rx="6" fill="#1f6feb" />
+  <text x="1095" y="706" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">Next Step: View V1 PRISM Failure →</text>
+</svg>

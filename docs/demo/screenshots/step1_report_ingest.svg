@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800">
+  <defs>
+    <style>
+      .bg { fill: #0d1117; }
+      .text-main { fill: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .text-muted { fill: #8b949e; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .text-white { fill: #f0f6fc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .card-bg { fill: #161b22; stroke: #30363d; stroke-width: 1; }
+      .active-step { fill: #1f6feb; }
+      .inactive-step { fill: #21262d; stroke: #30363d; stroke-width: 1; }
+      .btn-primary { fill: #238636; }
+      .btn-secondary { fill: #21262d; stroke: #30363d; stroke-width: 1; }
+      .dropzone { fill: #161b22; stroke: #388bfd; stroke-width: 2; stroke-dasharray: 6 6; rx: 8; }
+      .badge-blue { fill: rgba(56, 139, 253, 0.15); stroke: #388bfd; stroke-width: 1; }
+      .badge-green { fill: rgba(46, 160, 67, 0.15); stroke: #2ea043; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="800" class="bg" />
+
+  <!-- App Header -->
+  <rect x="0" y="0" width="1280" height="60" fill="#161b22" stroke="#30363d" stroke-width="1" />
+  <circle cx="36" cy="30" r="14" fill="#1f6feb" />
+  <path d="M 30 30 L 34 34 L 42 26" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="60" y="35" class="text-white" font-size="16" font-weight="600">PRISM: Open Source Security Transition Monitor</text>
+  <rect x="420" y="18" width="120" height="24" rx="12" class="badge-blue" />
+  <text x="435" y="34" fill="#58a6ff" font-size="11" font-weight="600">EVIDENCE-GROUNDED</text>
+
+  <!-- Stepper Navigation -->
+  <rect x="40" y="80" width="1200" height="65" rx="8" class="card-bg" />
+  <!-- Step 1 (Active) -->
+  <rect x="55" y="92" width="175" height="40" rx="6" fill="#1f6feb" />
+  <circle cx="75" cy="112" r="10" fill="#ffffff" />
+  <text x="72" y="116" fill="#1f6feb" font-size="11" font-weight="bold">1</text>
+  <text x="95" y="117" fill="#ffffff" font-size="12" font-weight="600">1. Report Ingestion</text>
+
+  <!-- Step 2 -->
+  <rect x="245" y="92" width="175" height="40" rx="6" class="inactive-step" />
+  <circle cx="265" cy="112" r="10" fill="#30363d" />
+  <text x="262" y="116" fill="#8b949e" font-size="11" font-weight="bold">2</text>
+  <text x="285" y="117" class="text-muted" font-size="12">2. Tri-State Claims</text>
+
+  <!-- Step 3 -->
+  <rect x="435" y="92" width="175" height="40" rx="6" class="inactive-step" />
+  <circle cx="455" cy="112" r="10" fill="#30363d" />
+  <text x="452" y="116" fill="#8b949e" font-size="11" font-weight="bold">3</text>
+  <text x="475" y="117" class="text-muted" font-size="12">3. V1 PRISM Failure</text>
+
+  <!-- Step 4 -->
+  <rect x="625" y="92" width="175" height="40" rx="6" class="inactive-step" />
+  <circle cx="645" cy="112" r="10" fill="#30363d" />
+  <text x="642" y="116" fill="#8b949e" font-size="11" font-weight="bold">4</text>
+  <text x="665" y="117" class="text-muted" font-size="12">4. Engineering Fix</text>
+
+  <!-- Step 5 -->
+  <rect x="815" y="92" width="175" height="40" rx="6" class="inactive-step" />
+  <circle cx="835" cy="112" r="10" fill="#30363d" />
+  <text x="832" y="116" fill="#8b949e" font-size="11" font-weight="bold">5</text>
+  <text x="855" y="117" class="text-muted" font-size="12">5. V2 Resolution</text>
+
+  <!-- Step 6 -->
+  <rect x="1005" y="92" width="220" height="40" rx="6" class="inactive-step" />
+  <circle cx="1025" cy="112" r="10" fill="#30363d" />
+  <text x="1022" y="116" fill="#8b949e" font-size="11" font-weight="bold">6</text>
+  <text x="1045" y="117" class="text-muted" font-size="12">6. Measured Benchmark</text>
+
+  <!-- Step 1 Content Container -->
+  <rect x="40" y="165" width="1200" height="580" rx="8" class="card-bg" />
+
+  <!-- Section Title -->
+  <text x="70" y="205" class="text-white" font-size="20" font-weight="600">Step 1: Upload &amp; Ingest Synthetic Security Audit Report</text>
+  <text x="70" y="230" class="text-muted" font-size="13">Ingest an independent deterministic report evaluating public metrics, transport encryption integrity, and endpoint exposure.</text>
+
+  <!-- Dropzone Card -->
+  <rect x="70" y="260" width="1140" height="240" rx="8" class="dropzone" />
+  <circle cx="640" cy="330" r="30" fill="rgba(56, 139, 253, 0.1)" />
+  <path d="M 640 315 L 640 345 M 625 330 L 640 315 L 655 330" stroke="#58a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <text x="640" y="380" class="text-white" font-size="16" font-weight="600" text-anchor="middle">Drag and drop synthetic security audit report (.json)</text>
+  <text x="640" y="405" class="text-muted" font-size="13" text-anchor="middle">Standard JSON structure containing report metadata, evaluation claims, and candidate evidence pool</text>
+
+  <!-- 1-Click Load Button -->
+  <rect x="450" y="430" width="380" height="42" rx="6" fill="#238636" />
+  <text x="640" y="456" fill="#ffffff" font-size="14" font-weight="600" text-anchor="middle">⚡ Load Pre-Packaged Synthetic Report (1-Click)</text>
+
+  <!-- Loaded Status Card -->
+  <rect x="70" y="520" width="1140" height="140" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1" />
+  <rect x="90" y="535" width="140" height="24" rx="12" class="badge-green" />
+  <text x="105" y="551" fill="#3fb950" font-size="11" font-weight="600">✓ ACTIVE REPORT</text>
+  <text x="245" y="552" class="text-white" font-size="15" font-weight="600">Synthetic Trust &amp; Safety Audit: SuperPrompt CLI Security Posture</text>
+  <text x="90" y="585" class="text-muted" font-size="13">Report ID: rep_synthetic_trust_sec_001 | Evaluated Target: superprompt-cli.dev | Claims: 6 total</text>
+  
+  <rect x="90" y="605" width="160" height="36" rx="6" fill="rgba(46, 160, 67, 0.1)" stroke="#2ea043" stroke-width="1" />
+  <text x="110" y="628" fill="#3fb950" font-size="13" font-weight="600">2 Claims VERIFIED</text>
+
+  <rect x="265" y="605" width="200" height="36" rx="6" fill="rgba(248, 81, 73, 0.1)" stroke="#f85149" stroke-width="1" />
+  <text x="285" y="628" fill="#f85149" font-size="13" font-weight="600">2 Claims CONTRADICTED</text>
+
+  <rect x="480" y="605" width="250" height="36" rx="6" fill="rgba(210, 153, 34, 0.1)" stroke="#d29922" stroke-width="1" />
+  <text x="500" y="628" fill="#e3b341" font-size="13" font-weight="600">2 Claims INSUFFICIENT EVIDENCE</text>
+
+  <!-- Bottom CTA -->
+  <rect x="980" y="675" width="230" height="42" rx="6" fill="#1f6feb" />
+  <text x="1095" y="701" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">Next Step: Tri-State Verification →</text>
+</svg>

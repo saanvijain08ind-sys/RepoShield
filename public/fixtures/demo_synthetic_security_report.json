@@ -1,0 +1,134 @@
+{
+  "report": {
+    "id": "rep_synthetic_trust_sec_001",
+    "title": "Synthetic Trust & Safety Audit: SuperPrompt CLI Security Posture",
+    "projectId": "proj_devcli",
+    "generatedAt": "2026-09-18T04:35:00Z",
+    "description": "Independent digital security audit evaluating public metrics, transport encryption integrity, and endpoint exposure for public open-source project SuperPrompt CLI.",
+    "claims": [
+      {
+        "id": "claim_github_stars",
+        "statement": "The open-source repository \"alexdev/superprompt-cli\" has reached or exceeded the 1,000 public GitHub stars growth threshold.",
+        "category": "Growth Milestone Verification",
+        "ruleType": "NUMERIC_THRESHOLD",
+        "numericThreshold": {
+          "threshold": 1000,
+          "operator": ">="
+        },
+        "targetEvidenceSource": "GitHub REST API",
+        "status": "INSUFFICIENT_EVIDENCE",
+        "verificationReason": "Awaiting deterministic evidence verification.",
+        "evidenceLinks": [],
+        "lastVerifiedAt": "2026-09-18T04:00:00Z"
+      },
+      {
+        "id": "claim_hsts_encryption",
+        "statement": "The production documentation website enforces Strict-Transport-Security (HSTS) with a minimum duration of 31,536,000 seconds (1 year).",
+        "category": "Transport Security",
+        "ruleType": "STRING_INCLUSION",
+        "expectedValue": "max-age=31536000",
+        "targetEvidenceSource": "HTTPS Response Header: Strict-Transport-Security",
+        "status": "INSUFFICIENT_EVIDENCE",
+        "verificationReason": "Awaiting deterministic evidence verification.",
+        "evidenceLinks": [],
+        "lastVerifiedAt": "2026-09-18T04:00:00Z"
+      },
+      {
+        "id": "claim_https_strict_redirection",
+        "statement": "All incoming unencrypted HTTP requests to port 80 are strictly redirected with an HTTP 301/308 redirect to HTTPS.",
+        "category": "Transport Security",
+        "ruleType": "STRING_INCLUSION",
+        "expectedValue": "redirect to https",
+        "targetEvidenceSource": "HTTP Insecure Transport Probe (Port 80)",
+        "status": "INSUFFICIENT_EVIDENCE",
+        "verificationReason": "Awaiting deterministic evidence verification.",
+        "evidenceLinks": [],
+        "lastVerifiedAt": "2026-09-18T04:00:00Z"
+      },
+      {
+        "id": "claim_no_git_exposure",
+        "statement": "The public web server does not expose internal Git version control directories (.git/HEAD) on publicly accessible endpoints.",
+        "category": "Information Disclosure",
+        "ruleType": "PRESENCE_CHECK",
+        "expectedValue": "not exposed",
+        "targetEvidenceSource": "HTTP Sensitive Endpoint Probe: /.git/HEAD",
+        "status": "INSUFFICIENT_EVIDENCE",
+        "verificationReason": "Awaiting deterministic evidence verification.",
+        "evidenceLinks": [],
+        "lastVerifiedAt": "2026-09-18T04:00:00Z"
+      },
+      {
+        "id": "claim_dns_caa_authorization",
+        "statement": "All DNS Certification Authority Authorization (CAA) records for \"superprompt-cli.dev\" strictly restrict certificate issuance to Let's Encrypt.",
+        "category": "Public Key Infrastructure",
+        "ruleType": "STRING_INCLUSION",
+        "expectedValue": "issue \"letsencrypt.org\"",
+        "targetEvidenceSource": "DNS CAA Record Resolver",
+        "status": "INSUFFICIENT_EVIDENCE",
+        "verificationReason": "Awaiting deterministic evidence verification.",
+        "evidenceLinks": [],
+        "lastVerifiedAt": "2026-09-18T04:00:00Z"
+      },
+      {
+        "id": "claim_db_at_rest_encryption",
+        "statement": "Internal persistence volumes and database storage partitions are encrypted at rest using AES-256 with customer-managed keys.",
+        "category": "Infrastructure Security",
+        "ruleType": "BOOLEAN_STATE",
+        "expectedValue": true,
+        "targetEvidenceSource": "Cloud KMS Storage Partition Audit",
+        "status": "INSUFFICIENT_EVIDENCE",
+        "verificationReason": "Awaiting deterministic evidence verification.",
+        "evidenceLinks": [],
+        "lastVerifiedAt": "2026-09-18T04:00:00Z"
+      }
+    ],
+    "summary": {
+      "totalClaims": 6,
+      "verifiedCount": 0,
+      "contradictedCount": 0,
+      "insufficientEvidenceCount": 6
+    }
+  },
+  "evidencePool": [
+    {
+      "id": "ev_gh_stars_1240",
+      "source": "GitHub REST API /repos/alexdev/superprompt-cli",
+      "referenceUrl": "https://api.github.com/repos/alexdev/superprompt-cli",
+      "observedValue": 1240,
+      "excerpt": "{\"stargazers_count\": 1240, \"watchers_count\": 1240, \"open_issues\": 12, \"archived\": false}",
+      "collectedAt": "2026-09-18T04:30:00Z",
+      "collector": "GitHub Metrics Collector v2.4",
+      "provenanceHash": "sha256:8f43a9b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9"
+    },
+    {
+      "id": "ev_hsts_header",
+      "source": "HTTPS Response Header: Strict-Transport-Security",
+      "referenceUrl": "https://superprompt-cli.dev",
+      "observedValue": "max-age=31536000; includeSubDomains; preload",
+      "excerpt": "strict-transport-security: max-age=31536000; includeSubDomains; preload",
+      "collectedAt": "2026-09-18T04:32:15Z",
+      "collector": "Live Transport Security Scanner v1.2",
+      "provenanceHash": "http-status:200-hsts-verified"
+    },
+    {
+      "id": "ev_plain_http_200",
+      "source": "HTTP Insecure Transport Probe (Port 80)",
+      "referenceUrl": "http://superprompt-cli.dev",
+      "observedValue": "HTTP/1.1 200 OK without Location redirect",
+      "excerpt": "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE html><html>Insecure Documentation Endpoint</html>",
+      "collectedAt": "2026-09-18T04:32:18Z",
+      "collector": "Plain HTTP Transport Auditor v1.0",
+      "provenanceHash": "http-status:200-no-redirect-to-https"
+    },
+    {
+      "id": "ev_git_head_probe",
+      "source": "HTTP Sensitive Endpoint Probe: /.git/HEAD",
+      "referenceUrl": "https://superprompt-cli.dev/.git/HEAD",
+      "observedValue": "HTTP 200 OK with Git repository pointer",
+      "excerpt": "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nref: refs/heads/main\n",
+      "collectedAt": "2026-09-18T04:32:20Z",
+      "collector": "Exposed Sensitive Endpoint Scanner v1.1",
+      "provenanceHash": "http-status:200-git-head-exposed"
+    }
+  ]
+}
